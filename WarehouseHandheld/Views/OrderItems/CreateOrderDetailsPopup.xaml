@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<popup:PopupBase
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="WarehouseHandheld.Views.OrderItems.CreateOrderDetailsPopup"
+    xmlns:popup="clr-namespace:WarehouseHandheld.Views.Base.Popup"
+    xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.OrderItems"
+    Padding="15"
+    ShowSaveButton="true"
+    SaveButtonText="Save"
+    SaveCommand="{Binding SaveCommand}"
+    Title="Create Order Details">
+    <popup:PopupBase.BindingContext>
+        <viewmodel:CreateOrderDetailsViewModel />
+    </popup:PopupBase.BindingContext>
+    <Grid
+        Padding="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width="0.4*" />
+            <ColumnDefinition
+                Width="0.6*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="40" />
+            <RowDefinition
+                Height="40" />
+            <RowDefinition
+                Height="40" />
+            <RowDefinition
+                Height="40" />
+            <RowDefinition
+                Height="40" />
+            <RowDefinition
+                Height="40" />
+            <RowDefinition
+                Height="40" />
+        </Grid.RowDefinitions>
+        <Label
+            Text="Product"
+            Grid.Row="0"
+            Grid.Column="0" />
+        <Label
+            Text="{Binding SelectedProductName}"
+            Grid.Row="0"
+            Grid.Column="1">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer
+                    Tapped="Handle_Product_Tapped"
+                    NumberOfTapsRequired="1" />
+            </Label.GestureRecognizers>
+        </Label>
+        <Label
+            Text="Process By"
+            VerticalOptions="Center"
+            Grid.Row="1"
+            Grid.Column="0" />
+        <Picker
+            x:Name="processByPicker"
+            VerticalOptions="Center"
+            Title="Choose Process By"
+            ItemsSource="{Binding ProcessByValues}"
+            SelectedIndexChanged="Handle_SelectedIndexChanged"
+            Grid.Row="1"
+            Grid.Column="1" />
+        <Label
+            Text="Quantity"
+            VerticalOptions="Center"
+            Grid.Row="2"
+            Grid.Column="0" />
+        <Entry Keyboard="Numeric"
+            Text="{Binding Quantity}"
+            Grid.Row="2"
+            Grid.Column="1"/>
+        <Label
+            Text="Price"
+            VerticalOptions="Center"
+            Grid.Row="3"
+            Grid.Column="0" />
+        <Entry Keyboard="Numeric"
+            Text="0"
+            Grid.Row="3"
+            Grid.Column="1"/>
+        <Label
+            Text="Warranty"
+            VerticalOptions="Center"
+            Grid.Row="4"
+            Grid.Column="0" />
+        <Picker
+            x:Name="warrantyPicker"
+            VerticalOptions="Center"
+            Title="Choose Warranty"
+            ItemsSource="{Binding WarrantyValues}"
+            Grid.Row="4"
+            Grid.Column="1" />
+        <Label
+            Text="Tax"
+            VerticalOptions="Center"
+            Grid.Row="5"
+            Grid.Column="0" />
+        <Picker
+            x:Name="taxPicker"
+            VerticalOptions="Center"
+            Title="Choose Tax"
+            ItemsSource="{Binding TaxValues}"
+            Grid.Row="5"
+            Grid.Column="1" />
+        <Label
+            Text="Notes"
+            VerticalOptions="Center"
+            Grid.Row="6"
+            Grid.Column="0" />
+        <Editor
+            Grid.Row="6"
+            Grid.Column="1" />
+        
+        
+    </Grid>
+</popup:PopupBase>

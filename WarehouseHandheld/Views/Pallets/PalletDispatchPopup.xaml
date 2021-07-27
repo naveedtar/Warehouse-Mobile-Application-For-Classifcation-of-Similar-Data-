@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<popup:PopupBase xmlns="http://xamarin.com/schemas/2014/forms" xmlns:resources="clr-namespace:WarehouseHandheld.Resources" xmlns:customEntry="clr-namespace:WarehouseHandheld.Elements.CustomEntry" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" x:Class="WarehouseHandheld.Views.Pallets.PalletDispatchPopup" xmlns:elements="clr-namespace:WarehouseHandheld.Elements.StepperElement" xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.Pallets" xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid" xmlns:popup="clr-namespace:WarehouseHandheld.Views.Base.Popup"
+    ShowSaveButton="true" DisableCancelPop="true" Padding="15" Title="{x:Static resources:AppStrings.AddDispatchInfo}">
+    <pages:PopupPage.BindingContext>
+        <viewmodel:PalletDispatchViewModel />
+    </pages:PopupPage.BindingContext>
+    <ScrollView>
+
+    <StackLayout Padding="10" Spacing="20">
+        <StackLayout Orientation="Horizontal">
+            <StackLayout HorizontalOptions="StartAndExpand">
+                <Label Text="{x:Static resources:AppStrings.SendMethod}" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" />
+                <Picker x:Name="dispatchMethods" ItemsSource="{Binding DispatchMethods}" SelectedItem="{Binding SelectedDispatchMethod}" Title="{x:Static resources:AppStrings.SelectDispatchMethod}" />
+            </StackLayout>
+            <StackLayout HorizontalOptions="EndAndExpand">
+                <Label Text="{x:Static resources:AppStrings.TrackReference}" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" />
+                <Entry Text="{Binding TrackReference}" />
+            </StackLayout>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <StackLayout HorizontalOptions="StartAndExpand">
+                <Label Text="{x:Static resources:AppStrings.Vehicle}" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" />
+                <Picker ItemsSource="{Binding Vehicles}" SelectedItem="{Binding SelectedVehicle}" Title="{x:Static resources:AppStrings.SelectVehicle}" />
+                <Entry Placeholder="{x:Static resources:AppStrings.EnterVehicleIdentifier}" IsVisible="{Binding IsCustomVehicle}" Text="{Binding CustomVehicleIdentifier}" />
+                <Entry Placeholder="{x:Static resources:AppStrings.EnterVehicleModel}" IsVisible="{Binding IsCustomVehicle}" Text="{Binding CustomVehicleModel}" />
+                <Entry Placeholder="{x:Static resources:AppStrings.EnterVehicleDescription}" IsVisible="{Binding IsCustomVehicle}" Text="{Binding CustomVehicleDescription}" />
+            </StackLayout>
+            <StackLayout HorizontalOptions="EndAndExpand">
+                <Label Text="{x:Static resources:AppStrings.Driver}" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" />
+                <Picker ItemsSource="{Binding Drivers}" SelectedItem="{Binding SelectedDriver}" Title="{x:Static resources:AppStrings.SelectDriver}" />
+            </StackLayout>
+        </StackLayout>
+        <Entry Placeholder="{x:Static resources:AppStrings.EnterDispatchReference}" Text="{Binding DispatchReference}" />
+        <Label Text="{x:Static resources:AppStrings.DispatchNotes}" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" />
+        <Editor Text="{Binding DispatchNotes}" />
+            <StackLayout Orientation="Horizontal">
+                <Label VerticalOptions="Center" Text="{x:Static resources:AppStrings.ProofImageCount}"/>
+                <Label VerticalOptions="Center" Text="{Binding ProofImagesCount}" />
+        <Button Text="{Binding TakePictureText}" Command="{Binding TakePictureCommand}" VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand" />
+        </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    
+</popup:PopupBase>

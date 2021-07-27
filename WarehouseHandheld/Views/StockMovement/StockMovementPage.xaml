@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<base:BasePage
+    x:Class="WarehouseHandheld.Views.StockMovement.StockMovementPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:WarehouseHandheld.Views.Base.BaseContentPage"
+    xmlns:behaviors="clr-namespace:WarehouseHandheld.Behaviors"
+    xmlns:controls="clr-namespace:SegmentedControl.FormsPlugin.Abstractions;assembly=SegmentedControl.FormsPlugin.Abstractions"
+    xmlns:converters="clr-namespace:WarehouseHandheld.ValueConverters"
+    xmlns:customEntry="clr-namespace:WarehouseHandheld.Elements.CustomEntry"
+    xmlns:dg="clr-namespace:Xamarin.Forms.DataGridLocal"
+    xmlns:stockMovement="clr-namespace:WarehouseHandheld.ViewModels.StockMovement"
+    Title="{Binding TitleText}"
+    NavigationPage.HasBackButton="False">
+    <ContentPage.BindingContext>
+        <stockMovement:StockMoveViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBooleanConverter x:Key="Invert" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding CompleteCommand}" Text="Done" />
+        <ToolbarItem Clicked="Back_Clicked" Icon="cancel.png" />
+    </ContentPage.ToolbarItems>
+
+    <StackLayout Padding="0,10,0,20">
+        <!--<controls:SegmentedControl
+            x:Name="SegControl"
+            TintColor="#007AFF"
+            ValueChanged="Segment_Changed">
+            <controls:SegmentedControl.Children>
+                <controls:SegmentedControlOption Text="From Location" />
+                <controls:SegmentedControlOption Text="To Location" />
+            </controls:SegmentedControl.Children>
+        </controls:SegmentedControl>-->
+        <StackLayout x:Name="SegContent">
+
+            <ActivityIndicator
+                HorizontalOptions="CenterAndExpand"
+                IsRunning="true"
+                IsVisible="{Binding IsBusy}"
+                VerticalOptions="CenterAndExpand" />
+
+            <StackLayout IsVisible="{Binding IsBusy, Converter={StaticResource Invert}}">
+                <Grid
+                    Padding="10,10,10,0"
+                    ColumnSpacing="10"
+                    RowSpacing="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="1.6*" />
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        x:Name="scanLocationLabel"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Text="{Binding ScanText}"
+                        TextColor="Black"
+                        VerticalTextAlignment="Center" />
+                    <StackLayout
+                        x:Name="ScanLocation"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Orientation="Horizontal"
+                        Spacing="0"
+                        VerticalOptions="CenterAndExpand">
+                        <customEntry:KeyboardDisabledEntry
+                            x:Name="scanLocationEntry"
+                            Completed="Location_Entry_Completed"
+                            HorizontalOptions="FillAndExpand"
+                            Placeholder="{Binding ScanText}"
+                            Text="{Binding ScanLocationCode}"
+                            VerticalOptions="CenterAndExpand" />
+                        <Image
+                            Margin="0,0,10,0"
+                            HeightRequest="25"
+                            Source="keyboard.png"
+                            VerticalOptions="CenterAndExpand">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Keyboard_Tapped_Location" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </StackLayout>
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Text="Selected Location"
+                        TextColor="Black"
+                        VerticalTextAlignment="Center" />
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Text="{Binding SelectedStockLocation.LocationCode}"
+                        VerticalTextAlignment="Center" />
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Text="Scan Product"
+                        TextColor="Black"
+                        VerticalTextAlignment="Center" />
+                    <StackLayout
+                        x:Name="ScanProduct"
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        IsEnabled="False"
+                        Orientation="Horizontal"
+                        Spacing="0"
+                        VerticalOptions="CenterAndExpand">
+                        <customEntry:KeyboardDisabledEntry
+                            x:Name="scanProductEntry"
+                            Completed="Scan_Product_Entry_Completed"
+                            HorizontalOptions="FillAndExpand"
+                            Placeholder="Scan Product"
+                            Text="{Binding ScanProductCode}"
+                            VerticalOptions="CenterAndExpand" />
+                        <Image
+                            Margin="0,0,10,0"
+                            HeightRequest="25"
+                            Source="keyboard.png"
+                            VerticalOptions="CenterAndExpand">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Keyboard_Tapped" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </StackLayout>
+                </Grid>
+                <dg:DataGrid
+                    x:Name="grid"
+                    BorderColor="#CCCCCC"
+                    HeaderBackground="#00a9e7"
+                    HeaderTextColor="White"
+                    IsSortable="false"
+                    SelectedItem=""
+                    ItemsSource="{Binding StockMovements}"
+                    VerticalOptions="FillAndExpand">
+                    <dg:DataGrid.Columns>
+                        <dg:DataGridColumn Title="Sku">
+                            <dg:DataGridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ContentView
+                                        BackgroundColor="{Binding RowColor}"
+                                        HorizontalOptions="Fill"
+                                        VerticalOptions="Fill">
+                                        <StackLayout BackgroundColor="{Binding RowColor}"
+                                                     Spacing="0"
+                                                     VerticalOptions="CenterAndExpand">
+                                            <Label
+                                                FontSize="12"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding ProductSkuCode}"
+                                              />
+                                        </StackLayout>
+                                    </ContentView>
+                                </DataTemplate>
+                            </dg:DataGridColumn.CellTemplate>
+                        </dg:DataGridColumn>
+                        <dg:DataGridColumn Title="Product">
+                            <dg:DataGridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ContentView
+                                        BackgroundColor="{Binding RowColor}"
+                                        HorizontalOptions="Fill"
+                                        VerticalOptions="Fill">
+                                        <StackLayout BackgroundColor="{Binding RowColor}"
+                                                     Spacing="0"
+                                                     VerticalOptions="CenterAndExpand">
+                                            <Label
+                                                FontSize="12"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding ProductName}"
+                                            />
+                                        </StackLayout>
+                                    </ContentView>
+                                </DataTemplate>
+                            </dg:DataGridColumn.CellTemplate>
+                        </dg:DataGridColumn>
+                        <dg:DataGridColumn Title="Qty">
+                            <dg:DataGridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ContentView
+                                        BackgroundColor="{Binding RowColor}"
+                                        HorizontalOptions="Fill"
+                                        VerticalOptions="Fill">
+                                        <StackLayout BackgroundColor="{Binding RowColor}"
+                                                     Spacing="0"
+                                                     VerticalOptions="CenterAndExpand">
+                                            <Label
+                                                FontSize="12"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Qty}"
+                                            />
+                                        </StackLayout>
+                                    </ContentView>
+                                </DataTemplate>
+                            </dg:DataGridColumn.CellTemplate>
+                        </dg:DataGridColumn>
+                        <dg:DataGridColumn Title="From">
+                            <dg:DataGridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ContentView
+                                        BackgroundColor="{Binding RowColor}"
+                                        HorizontalOptions="Fill"
+                                        VerticalOptions="Fill">
+                                        <StackLayout BackgroundColor="{Binding RowColor}"
+                                                     Spacing="0"
+                                                     VerticalOptions="CenterAndExpand">
+                                            <Label
+                                                FontSize="12"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding FromLocationCode}"
+                                            />
+                                        </StackLayout>
+                                    </ContentView>
+                                </DataTemplate>
+                            </dg:DataGridColumn.CellTemplate>
+                        </dg:DataGridColumn>
+                        <dg:DataGridColumn Title="QtyProc">
+                            <dg:DataGridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ContentView
+                                        BackgroundColor="{Binding RowColor}"
+                                        HorizontalOptions="Fill"
+                                        VerticalOptions="Fill">
+                                        <StackLayout BackgroundColor="{Binding RowColor}"
+                                                     Spacing="0"
+                                                     VerticalOptions="CenterAndExpand">
+                                            <Label
+                                                FontSize="12"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding QtyProcessed}"
+                                            />
+                                        </StackLayout>
+                                    </ContentView>
+                                </DataTemplate>
+                            </dg:DataGridColumn.CellTemplate>
+                        </dg:DataGridColumn>
+                        <dg:DataGridColumn Title="To">
+                            <dg:DataGridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ContentView
+                                        BackgroundColor="{Binding RowColor}"
+                                        HorizontalOptions="Fill"
+                                        VerticalOptions="Fill">
+                                        <StackLayout BackgroundColor="{Binding RowColor}"
+                                                     Spacing="0"
+                                                     VerticalOptions="CenterAndExpand">
+                                            <Label
+                                                FontSize="12"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding ToLocationCode}"
+                                            />
+                                        </StackLayout>
+                                    </ContentView>
+                                </DataTemplate>
+                            </dg:DataGridColumn.CellTemplate>
+                        </dg:DataGridColumn>
+                    </dg:DataGrid.Columns>
+                    <dg:DataGrid.RowsBackgroundColorPalette>
+                        <dg:PaletteCollection>
+                            <Color>#f6fbfe</Color>
+                            <Color>#fcfcfc</Color>
+                        </dg:PaletteCollection>
+                    </dg:DataGrid.RowsBackgroundColorPalette>
+                    <dg:DataGrid.Behaviors>
+                        <behaviors:EventToCommandBehavior
+                            Command="{Binding ItemSelectedCommand}"
+                            CommandParameter="{Binding SelectedItem, Source={x:Reference grid}}"
+                            EventName="ItemSelected" />
+                    </dg:DataGrid.Behaviors>
+                </dg:DataGrid>
+            </StackLayout>
+
+        </StackLayout>
+    </StackLayout>
+</base:BasePage>

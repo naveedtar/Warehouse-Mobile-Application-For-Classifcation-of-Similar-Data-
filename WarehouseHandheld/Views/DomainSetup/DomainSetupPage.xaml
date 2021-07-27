@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<base:BasePage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="WarehouseHandheld.Views.DomainSetup.DomainSetupPage"
+    xmlns:resources="clr-namespace:WarehouseHandheld.Resources"
+    xmlns:base="clr-namespace:WarehouseHandheld.Views.Base.BaseContentPage"
+    xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.DomainSetup">
+    <ContentPage.BindingContext>
+        <viewmodel:DomainSetupViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout
+            BackgroundColor="White"
+            Padding="20,40,20,20"
+            Spacing="30">
+            <Label
+                Text="Setup App Domain"
+                FontAttributes="Bold"
+                FontSize="20" />
+            <StackLayout
+                Orientation="Horizontal" Spacing="0">
+                <Label
+                    FontAttributes="Bold"
+                    Text="{Binding Protocol}"
+                    VerticalOptions="Center"
+                    FontSize="18"
+                     >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChangeProtocolCommand}" NumberOfTapsRequired="1" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Entry
+                    Placeholder="domain"
+                    x:Name="domain"
+                    VerticalOptions="Center"
+                    Text="{Binding Domain}"
+                    HorizontalOptions="FillAndExpand"/>
+            </StackLayout>
+            <Button
+                Text="{x:Static resources:AppStrings.Save}"
+                Command="{Binding SaveCommand}"
+                HeightRequest="44"
+                BorderRadius="22"
+                BackgroundColor="Silver" />
+            <Button
+                    Text="About"
+                    Command="{Binding AboutCommand}"
+                    HeightRequest="44"
+                BackgroundColor="Transparent"/>
+        </StackLayout>
+    </ContentPage.Content>
+</base:BasePage>

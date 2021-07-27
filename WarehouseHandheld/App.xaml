@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="WarehouseHandheld.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="Black" />
+            </Style>
+            <DataTemplate x:Key="SerialTemplate">
+                <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                    <Label Text="{Binding Serial}" TextColor="Black" Margin="25,2,0,2" />
+                    <Label Text="{Binding CasesFormatted}" TextColor="Black" Margin="0,2,50,2" HorizontalOptions="EndAndExpand" />
+                </StackLayout>
+                <!--   <StackLayout VerticalOptions="Center">
+                        <Label HorizontalOptions="CenterAndExpand" Text="{Binding Serial}" TextColor="Black" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                    </StackLayout>-->
+            </DataTemplate>
+            <!-- <DataTemplate x:Key="CasesTemplate">
+                    <StackLayout VerticalOptions="Center">
+                        <Label HorizontalOptions="CenterAndExpand" Text="{Binding CasesFormatted}" TextColor="Black" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                    </StackLayout>
+                </DataTemplate>-->
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

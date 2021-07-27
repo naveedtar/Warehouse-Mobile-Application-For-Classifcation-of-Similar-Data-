@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<popup:PopupBase
+    x:Class="WarehouseHandheld.Views.ScanItems.ScanNonSerialItemsPopup"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customEntry="clr-namespace:WarehouseHandheld.Elements.CustomEntry"
+    xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+    xmlns:elements="clr-namespace:WarehouseHandheld.Elements.StepperElement"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:popup="clr-namespace:WarehouseHandheld.Views.Base.Popup"
+    xmlns:resources="clr-namespace:WarehouseHandheld.Resources"
+    xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.ScanItems"
+    Title="{x:Static resources:AppStrings.ScanNonSerialItems}"
+    Padding="15"
+    DisableCancelPop="true"
+    ShowSaveButton="true">
+    <pages:PopupPage.BindingContext>
+        <viewmodel:ScanItemsViewModel />
+    </pages:PopupPage.BindingContext>
+    <StackLayout
+        Padding="10"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
+        <Grid x:Name="mainGrid" RowSpacing="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="1.6*" />
+            </Grid.ColumnDefinitions>
+            <Label
+                x:Name="LocationLabel"
+                Grid.Row="0"
+                Grid.Column="0"
+                HorizontalOptions="FillAndExpand"
+                Text="{x:Static resources:AppStrings.ScanLocation}"
+                VerticalOptions="CenterAndExpand" />
+            <Entry
+                x:Name="LocationEntry"
+                Grid.Row="0"
+                Grid.Column="1"
+                Completed="Handle_Location_Completed"
+                FontSize="14"
+                HorizontalOptions="FillAndExpand"
+                Placeholder="{x:Static resources:AppStrings.ScanEnterLocationCode}"
+                Unfocused="LocationEntry_Unfocused"
+                VerticalOptions="CenterAndExpand" />
+            <Label
+                x:Name="ProdCodeLabel"
+                Grid.Row="1"
+                Grid.Column="0"
+                HorizontalOptions="FillAndExpand"
+                Text="{x:Static resources:AppStrings.ScanProductCode}"
+                VerticalOptions="CenterAndExpand" />
+            <customEntry:KeyboardDisabledEntry
+                x:Name="scanEntry"
+                Grid.Row="1"
+                Grid.Column="1"
+                Completed="Handle_Completed"
+                FontSize="14"
+                HorizontalOptions="FillAndExpand"
+                IsEnabled="False"
+                Placeholder="{x:Static resources:AppStrings.ScanEnterProductCode}"
+                Text="{Binding ProductCode}"
+                TextChanged="Handle_ScanTextChanged"
+                VerticalOptions="CenterAndExpand" />
+            <Label
+                Grid.Row="2"
+                Grid.Column="0"
+                Margin="0,5,0,5"
+                HorizontalOptions="FillAndExpand"
+                Text="Pick Max"
+                VerticalOptions="CenterAndExpand" />
+            <Label
+                Grid.Row="2"
+                Grid.Column="1"
+                Margin="0,5,0,5"
+                HorizontalOptions="FillAndExpand"
+                Text="{Binding MaxQuantity}"
+                VerticalOptions="CenterAndExpand" />
+            <Label
+                x:Name="ItemScanLabel"
+                Grid.Row="3"
+                Grid.Column="0"
+                Margin="0,5,0,0"
+                HorizontalOptions="FillAndExpand"
+                Text="Item To Scan"
+                VerticalOptions="CenterAndExpand" />
+
+            <Label
+                Grid.Row="3"
+                Grid.Column="1"
+                Margin="0,5,0,0"
+                HorizontalOptions="FillAndExpand"
+                Text="{Binding OrderDetail.Product.SKUCode}"
+                VerticalOptions="CenterAndExpand" />
+            <Label
+                x:Name="BatchNumberLabel"
+                Grid.Row="4"
+                Grid.Column="0"
+                HorizontalOptions="FillAndExpand"
+                IsVisible="false"
+                Text="Batch Number"
+                VerticalOptions="CenterAndExpand" />
+            <Entry
+                x:Name="BatchNumber"
+                Grid.Row="4"
+                Grid.Column="1"
+                HorizontalOptions="FillAndExpand"
+                IsVisible="false"
+                Text="{Binding BatchNumber}"
+                VerticalOptions="CenterAndExpand" />
+            <Label
+                x:Name="ExpiryDateLabel"
+                Grid.Row="5"
+                Grid.Column="0"
+                HorizontalOptions="FillAndExpand"
+                IsVisible="false"
+                Text="Expiry Date"
+                VerticalOptions="CenterAndExpand" />
+            <DatePicker
+                x:Name="ExpiryDatePicker"
+                Grid.Row="5"
+                Grid.Column="1"
+                Date="{Binding ExpiryDate}"
+                HorizontalOptions="FillAndExpand"
+                IsVisible="false"
+                VerticalOptions="CenterAndExpand" />
+            <Label
+                x:Name="AddCasesLabel"
+                Grid.Row="6"
+                Grid.Column="0"
+                HorizontalOptions="FillAndExpand"
+                Text="Add Cases"
+                VerticalOptions="CenterAndExpand" />
+            <Switch
+                x:Name="CasesSwitch"
+                Grid.Row="6"
+                Grid.Column="1"
+                HorizontalOptions="FillAndExpand"
+                Toggled="Handle_Toggled"
+                VerticalOptions="CenterAndExpand" />
+            <Label
+                x:Name="QuantityLabel"
+                Grid.Row="7"
+                Grid.Column="0"
+                HorizontalOptions="FillAndExpand"
+                Text="{x:Static resources:AppStrings.Quantity}"
+                VerticalOptions="CenterAndExpand" />
+            <elements:Stepper
+                x:Name="QuantityStepper"
+                Grid.Row="7"
+                Grid.Column="1"
+                HorizontalOptions="FillAndExpand"
+                Increment="{Binding IncrementValue}"
+                IsEntryDisable="{Binding IsDisableEntry}"
+                Maximum="{Binding MaxQuantity}"
+                ValueChanged="StepperIncrementedAutoSave"
+                VerticalOptions="CenterAndExpand"
+                Value="{Binding Quantity, Mode=TwoWay}" />
+            <Label
+                x:Name="CasesLabel"
+                Grid.Row="8"
+                Grid.Column="0"
+                HorizontalOptions="FillAndExpand"
+                IsVisible="false"
+                Text="Cases"
+                VerticalOptions="CenterAndExpand" />
+            <elements:Stepper
+                x:Name="CasesStepper"
+                Grid.Row="8"
+                Grid.Column="1"
+                Increment="{Binding IncrementValue}"
+                IsVisible="false"
+                Maximum="{Binding MaxCases}"
+                Value="{Binding Case}" />
+            <Label
+                x:Name="PerCaseLabel"
+                Grid.Row="9"
+                Grid.Column="0"
+                IsVisible="false"
+                Text="Products/Case" />
+            <Label
+                x:Name="PerCaseText"
+                Grid.Row="9"
+                Grid.Column="1"
+                HorizontalOptions="FillAndExpand"
+                IsVisible="false"
+                Text="{Binding OrderDetail.Product.ProductsPerCase}"
+                VerticalOptions="CenterAndExpand" />
+            <Label
+                x:Name="CasesProgress"
+                Grid.Row="10"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                HorizontalOptions="FillAndExpand"
+                IsVisible="false"
+                Text="{Binding CasesProgress}"
+                TextColor="Gray"
+                VerticalOptions="CenterAndExpand" />
+        </Grid>
+        <!--        <dg:DataGrid
+            ItemsSource="{Binding Products}"
+            VerticalOptions="FillAndExpand">
+            <dg:DataGrid.Columns>
+                <dg:DataGridColumn
+                    Title="{x:Static resources:AppStrings.ProductId}"
+                    PropertyName="ProductId" />
+                <dg:DataGridColumn
+                    Title="{x:Static resources:AppStrings.ProductCode}"
+                    PropertyName="SKUCode" />
+                <dg:DataGridColumn
+                    Title="{x:Static resources:AppStrings.ProductName}"
+                    PropertyName="Name" />
+            </dg:DataGrid.Columns>
+        </dg:DataGrid>-->
+    </StackLayout>
+</popup:PopupBase>

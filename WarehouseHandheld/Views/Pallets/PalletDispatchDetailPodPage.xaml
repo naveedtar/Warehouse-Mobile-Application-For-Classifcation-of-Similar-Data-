@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<base:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:customEntry="clr-namespace:WarehouseHandheld.Elements.CustomEntry"
+             x:Class="WarehouseHandheld.Views.Pallets.PalletDispatchDetailPodPage"
+               xmlns:base="clr-namespace:WarehouseHandheld.Views.Base.BaseContentPage"
+             xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.Pallets"
+             xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid" 
+             xmlns:behaviors="clr-namespace:WarehouseHandheld.Behaviors"
+             x:Name="page"
+             Padding="15"
+          
+             >
+    
+    <ContentPage.BindingContext>
+        <viewmodel:PalletDispatchDetailPodViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem  x:Name="SubmitOrderButton" Text="Done"  Clicked="SubmitButtonClicked" />
+<!--      <ToolbarItem Text="Add Item" Command="{Binding AddItemCommand}" />-->
+        <ToolbarItem x:Name="CancelButton" Text="Cancel"  Clicked="ClickedCancelled" />
+    </ContentPage.ToolbarItems>
+    
+    <StackLayout>
+    <StackLayout Padding="20">
+            
+         <StackLayout Orientation="Horizontal" VerticalOptions="StartAndExpand">
+      <Label Text="Delivery Reference:" FontSize="16" VerticalOptions="CenterAndExpand" />
+     <StackLayout Orientation="Horizontal" Margin="10,0,0,0" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
+      <Label Text="{Binding PalletDispatchObj.OrderProcess.DeliveryNO}"  FontSize="16" VerticalOptions="CenterAndExpand" />
+    </StackLayout>
+    </StackLayout>     
+      <StackLayout Orientation="Horizontal" VerticalOptions="StartAndExpand">
+      <Label Text="Postcode:"  FontSize="16" VerticalOptions="CenterAndExpand" />
+     <StackLayout Orientation="Horizontal" Margin="10,0,0,0" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
+      <Label Text="{Binding PalletDispatchObj.Order.ShipmentAddressPostcode}"  FontSize="16"  VerticalOptions="CenterAndExpand" />
+    </StackLayout>
+    </StackLayout>
+      <StackLayout Orientation="Horizontal" VerticalOptions="StartAndExpand">
+      <Label Text="Shipment Address:" FontSize="16" VerticalOptions="CenterAndExpand" />
+     <StackLayout Orientation="Horizontal" Margin="10,0,0,0" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
+      <Label Text="{Binding PalletDispatchObj.Order.ShipmentAddressLine1}"  FontSize="16" VerticalOptions="CenterAndExpand" />
+    </StackLayout>
+    </StackLayout>
+            
+            
+     
+                
+       <StackLayout Orientation="Horizontal" VerticalOptions="StartAndExpand">
+       <Label Text="Enter Pallet Serial: " VerticalOptions="CenterAndExpand" />
+       <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
+        <customEntry:KeyboardDisabledEntry x:Name="palletSerialScan" Placeholder="Scan/Enter Pallet" Completed="Handle_Completed" VerticalOptions="Start" HorizontalOptions="FillAndExpand"/>
+        <Image Margin="0,0,5,0" Source="keyboard.png" HeightRequest="30" >
+          <Image.GestureRecognizers>
+                <TapGestureRecognizer
+                    Tapped="Keyboard_Tapped"
+                    NumberOfTapsRequired="1" />
+          </Image.GestureRecognizers>
+       </Image>
+    </StackLayout>
+    </StackLayout>
+      
+      <StackLayout Orientation="Horizontal" IsVisible="{Binding CommentBox}" VerticalOptions="StartAndExpand">
+      <Label Text="Comments:" FontSize="16" VerticalOptions="CenterAndExpand" />
+     <StackLayout Orientation="Horizontal" Margin="10,0,0,0" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
+      <Entry Text="{Binding Comments}"  FontSize="16" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" WidthRequest="150" />
+    </StackLayout>
+    </StackLayout> 
+            
+    </StackLayout>
+    <dg:DataGrid
+               x:Name="grid"
+               VerticalOptions="FillAndExpand"
+               HeaderTextColor="White"
+            IsSortable="false"
+               ItemsSource="{Binding Pallets}">
+                    <dg:DataGrid.Columns>
+                        <dg:DataGridColumn
+                            Title="Pallets"
+                            HorizontalContentAlignment="CenterAndExpand">
+                    <dg:DataGridColumn.CellTemplate>
+                        <DataTemplate>
+                            <ContentView HorizontalOptions="Fill" VerticalOptions="Fill"  BackgroundColor="{Binding SelectedColor}">
+                                <Label Text="{Binding PalletNumber}" HorizontalOptions="Center" FontSize="12" VerticalOptions="CenterAndExpand" TextColor="Black"/>
+                            </ContentView>
+                        </DataTemplate>
+                    </dg:DataGridColumn.CellTemplate>
+                </dg:DataGridColumn>
+                
+                  <dg:DataGridColumn
+                            Title="Pallet Info"
+                            HorizontalContentAlignment="CenterAndExpand">
+                    <dg:DataGridColumn.CellTemplate>
+                        <DataTemplate>
+                            <ContentView HorizontalOptions="Fill" VerticalOptions="Fill"  BackgroundColor="{Binding SelectedColor}">
+<!--                                <Label Text="{Binding PalletNumber}" HorizontalOptions="Center" FontSize="12" VerticalOptions="CenterAndExpand" TextColor="Black"/>-->
+                                    <Button CommandParameter="{Binding .}" Command="{Binding BindingContext.PalletInfoCommand, Source={x:Reference page}}" HeightRequest="30" WidthRequest="30" Image="information.png"  BackgroundColor="Transparent" />
+                            </ContentView>
+                        </DataTemplate>
+                    </dg:DataGridColumn.CellTemplate>
+                </dg:DataGridColumn>
+                 <!--   <dg:DataGridColumn
+                            Title="Cases"
+                            PropertyName="CasesFormatted"
+                            HorizontalContentAlignment="CenterAndExpand"
+                    />-->
+                     </dg:DataGrid.Columns>   
+                    <dg:DataGrid.RowsBackgroundColorPalette>
+                        <dg:PaletteCollection>
+                            <Color>#f6fbfe</Color>
+                            <Color>#fcfcfc</Color>
+                    
+                        </dg:PaletteCollection>
+                    </dg:DataGrid.RowsBackgroundColorPalette>
+                    <dg:DataGrid.Behaviors>
+                        <behaviors:EventToCommandBehavior
+                            EventName="ItemSelected"
+                            CommandParameter="{Binding SelectedItem, Source={x:Reference grid}}"
+                            Command="{Binding ItemSelectedCommand}" />
+                    </dg:DataGrid.Behaviors>
+                </dg:DataGrid>
+    </StackLayout>
+</base:BasePage>

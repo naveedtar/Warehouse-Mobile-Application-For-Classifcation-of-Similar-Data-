@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<popup:PopupBase
+    x:Class="WarehouseHandheld.Views.StockTake.StockTakeQuantityPopup"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:elements="clr-namespace:WarehouseHandheld.Elements.StepperElement"
+    xmlns:popup="clr-namespace:WarehouseHandheld.Views.Base.Popup"
+    xmlns:resources="clr-namespace:WarehouseHandheld.Resources"
+    x:Name="page"
+    Title="{x:Static resources:AppStrings.AddProductQuantity}"
+    Padding="15"
+    BindingContext="{x:Reference page}"
+    DisableCancelPop="true"
+    ShowSaveButton="true">
+
+    <Grid Padding="30" RowSpacing="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="7*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+
+        </Grid.RowDefinitions>
+
+        <Label
+            x:Name="CasesLabel"
+            Grid.Row="0"
+            Grid.Column="0"
+            Text="Cases :"
+            VerticalOptions="Center" />
+        <elements:Stepper
+            x:Name="CasesStepper"
+            Grid.Row="0"
+            Grid.Column="1"
+            Minimum="1"
+            Value="{Binding Cases, Mode=TwoWay}" />
+
+        <Label
+            x:Name="QuantityLabel"
+            Grid.Row="1"
+            Grid.Column="0"
+            Text="Quantity :"
+            VerticalOptions="Center" />
+        <elements:Stepper
+            x:Name="QuantityStepper"
+            Grid.Row="1"
+            Grid.Column="1"
+            Minimum="1"
+            Value="{Binding Quantity, Mode=TwoWay}" />
+
+        <Label
+            x:Name="SwitchLabel"
+            Grid.Row="2"
+            Grid.Column="0"
+            Text="Add Quantity"
+            VerticalOptions="Center" />
+        <Switch
+            Grid.Row="2"
+            Grid.Column="1"
+            IsToggled="False"
+            Toggled="Handle_Toggled" />
+
+        <Label
+            x:Name="PerCaseLabel"
+            Grid.Row="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Text="Products / Case"
+            VerticalOptions="Center" />
+        <Label
+            x:Name="PerCaseText"
+            Grid.Row="3"
+            Grid.Column="1"
+            HorizontalOptions="End"
+            VerticalOptions="Center" />
+
+        <Label
+            x:Name="ProgressLabel"
+            Grid.Row="4"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            IsVisible="true"
+            Text="{Binding Progress}"
+            TextColor="Gray"
+            VerticalOptions="Center" />
+
+        <Label
+            x:Name="BatchNumberLabel"
+            Grid.Row="5"
+            Grid.Column="0"
+            IsVisible="false"
+            Text="Batch Number"
+            VerticalTextAlignment="Center" />
+        <Entry
+            x:Name="BatchNumber"
+            Grid.Row="5"
+            Grid.Column="1"
+            IsVisible="false" />
+        <Label
+            x:Name="ExpiryDateLabel"
+            Grid.Row="6"
+            Grid.Column="0"
+            IsVisible="false"
+            Text="Expiry Date"
+            VerticalTextAlignment="Center" />
+        <DatePicker
+            x:Name="ExpiryDatePicker"
+            Grid.Row="6"
+            Grid.Column="1"
+            IsVisible="false" />
+    </Grid>
+
+</popup:PopupBase>

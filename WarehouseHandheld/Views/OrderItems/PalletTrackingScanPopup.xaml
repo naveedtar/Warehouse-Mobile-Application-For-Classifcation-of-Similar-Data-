@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<popup:PopupBase
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="WarehouseHandheld.Views.OrderItems.PalletTrackingScanPopup"
+    xmlns:popup="clr-namespace:WarehouseHandheld.Views.Base.Popup"
+    xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.OrderItems"
+    xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+    xmlns:behaviors="clr-namespace:WarehouseHandheld.Behaviors"
+    xmlns:customEntry="clr-namespace:WarehouseHandheld.Elements.CustomEntry"
+    Padding="15"
+    ShowSaveButton="true"
+    SaveButtonText="Done"
+    Title="Scan Pallet">
+    <StackLayout Padding="20">
+        <StackLayout x:Name="ActivePalletLayout" IsVisible="false">
+        <StackLayout  Orientation="Horizontal" >
+            <Label Text="Progress:" VerticalOptions="Center"></Label>
+            <Label Text="{Binding Progress}" VerticalOptions="Center"></Label>
+
+        </StackLayout>
+            <StackLayout  Orientation="Horizontal">
+            <Label Text="{Binding ItemToScanText}" VerticalOptions="Center"></Label>
+            <Label Text="{Binding SerialToScan}" VerticalOptions="Center"></Label>
+
+        </StackLayout>
+            </StackLayout>
+        <Grid
+                RowSpacing="0"
+                ColumnSpacing="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition
+                        Height="Auto" />
+                    <RowDefinition
+                        Height="Auto" />
+                    <RowDefinition
+                        Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="*" />
+                    <ColumnDefinition
+                        Width="1.6*" />
+                </Grid.ColumnDefinitions>
+            <Label Text="Prod. Name" Grid.Row="0" Grid.Column="0"/>
+            <Label Text="{Binding Product.Name}" Grid.Row="0" Grid.Column="1"/>
+            <Label Text="SKU" Grid.Row="1" Grid.Column="0"/>
+            <Label Text="{Binding Product.SKUCode}" Grid.Row="1" Grid.Column="1"/>
+            <Label Text="Barcode" Grid.Row="2" Grid.Column="0"/>
+            <Label Text="{Binding Product.BarCode}" Grid.Row="2" Grid.Column="1"/>
+            </Grid>
+    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+        <customEntry:KeyboardDisabledEntry x:Name="serialScanEntry" Placeholder="Scan/Enter Pallet" Completed="Handle_Completed" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
+        <Image Margin="0,0,10,0" Source="keyboard.png" HeightRequest="25" VerticalOptions="CenterAndExpand">
+                        <Image.GestureRecognizers>
+                <TapGestureRecognizer
+                    Tapped="Keyboard_Tapped"
+                    NumberOfTapsRequired="1" />
+            </Image.GestureRecognizers>
+                        </Image>
+    </StackLayout>
+        <Button x:Name="NextButton" Text="Skip Pallet" IsVisible="false" HorizontalOptions="EndAndExpand" VerticalOptions="Start" WidthRequest="80" Clicked="Next_Clicked"/>
+        
+        <StackLayout Orientation="Horizontal"  BackgroundColor="#00A9E7">
+                <Label Text="Scanned Pallets" FontAttributes="Bold" TextColor="White"  Margin="25,2,0,2"/>
+                <Label Text="Cases" TextColor="White" Margin="0,2,50,2" FontAttributes="Bold" HorizontalOptions="EndAndExpand"/>
+        </StackLayout>
+        
+        <ScrollView VerticalOptions="FillAndExpand">
+        <dg:DataGrid
+               x:Name="grid"
+               IsSortable="false"
+               VerticalOptions="FillAndExpand"
+               HeaderHeight="0"
+               ItemsSource="{Binding ScannedPallets}">
+                    <dg:DataGrid.Columns>
+                        <dg:DataGridColumn
+                            CellTemplate="{x:StaticResource SerialTemplate}"                        
+                            VerticalContentAlignment="Center"
+                            HorizontalContentAlignment="CenterAndExpand">
+                        <!--<dg:DataGridColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label HorizontalOptions="CenterAndExpand" Text="{Binding Serial}" TextColor="Black" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                                   />
+                             </DataTemplate>
+                        </dg:DataGridColumn.CellTemplate>-->
+                    </dg:DataGridColumn>
+                   <!-- <dg:DataGridColumn
+                            CellTemplate="{x:StaticResource CasesTemplate}"
+                            VerticalContentAlignment="Center"
+                            HorizontalContentAlignment="CenterAndExpand"-->
+                       <!-- <dg:DataGridColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label HorizontalOptions="CenterAndExpand" Text="{Binding CasesFormatted}" TextColor="Black" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                                   />
+                             </DataTemplate>
+                        </dg:DataGridColumn.CellTemplate>-->
+                <!--    </dg:DataGridColumn>-->
+                     </dg:DataGrid.Columns>   
+                    <dg:DataGrid.RowsBackgroundColorPalette>
+                        <dg:PaletteCollection>
+                            <Color>#f6fbfe</Color>
+                            <Color>#fcfcfc</Color>
+                        </dg:PaletteCollection>
+                    </dg:DataGrid.RowsBackgroundColorPalette>
+                    <dg:DataGrid.Behaviors>
+                        <behaviors:EventToCommandBehavior
+                            EventName="ItemSelected"
+                            CommandParameter="{Binding SelectedItem, Source={x:Reference grid}}"
+                            Command="{Binding ItemSelectedCommand}" />
+                    </dg:DataGrid.Behaviors>
+                </dg:DataGrid>
+        </ScrollView>
+    </StackLayout>
+    
+</popup:PopupBase>

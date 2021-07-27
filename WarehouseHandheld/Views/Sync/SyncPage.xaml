@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<base:BasePage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="WarehouseHandheld.Views.Sync.SyncPage"
+    xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.Sync"
+    xmlns:base="clr-namespace:WarehouseHandheld.Views.Base.BaseContentPage"
+    xmlns:resources="clr-namespace:WarehouseHandheld.Resources"
+    xmlns:behaviors="clr-namespace:WarehouseHandheld.Behaviors"
+    Title="{x:Static resources:AppStrings.Sync}">
+    <ContentPage.BindingContext>
+        <viewmodel:SyncViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <ListView
+            ItemsSource="{Binding SyncList}"
+            RowHeight="50"
+            ItemSelected="Handle_ItemSelected">
+            <ListView.Header>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Padding="10">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                        <Label VerticalOptions="Center" Text="Sync Duration" FontSize="18" />
+                        <Picker x:Name="minutesPicker" VerticalOptions="Center" WidthRequest="70" SelectedIndexChanged="Handle_SelectedIndexChanged">
+                            <Picker.Items>
+                                <x:String>1min</x:String>
+                                <x:String>2min</x:String>
+                                <x:String>3min</x:String>
+                                <x:String>4min</x:String>
+                                <x:String>5min</x:String>
+                                <x:String>10min</x:String>
+                                <x:String>15min</x:String>
+                                <x:String>30min</x:String>
+                                <x:String>45min</x:String>
+                                <x:String>1hour</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                        <Label Text="Auto Sync" VerticalOptions="Center" FontSize="18" />
+                        <Switch IsToggled="{Binding AutoSync}" Toggled="Handle_SwitchToggled" />
+                    </StackLayout>
+                </StackLayout>
+            </ListView.Header>
+            
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout
+                            Padding="10"
+                            BackgroundColor="Gray"
+                            Orientation="Horizontal">
+                            <ActivityIndicator
+                                Color="White"
+                                VerticalOptions="Center"
+                                IsRunning="true"
+                                IsVisible="{Binding IsSyncing}" />
+                            <Label
+                                TextColor="White"
+                                FontSize="18"
+                                VerticalOptions="Center"
+                                Text="{Binding Name}" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.Behaviors>
+                <behaviors:EventToCommandBehavior
+                    EventName="ItemTapped"
+                    Command="{Binding ItemTappedCommand}" />
+            </ListView.Behaviors>
+        </ListView>
+    </ContentPage.Content>
+</base:BasePage>

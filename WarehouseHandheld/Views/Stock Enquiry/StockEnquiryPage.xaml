@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<base:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+               xmlns:base="clr-namespace:WarehouseHandheld.Views.Base.BaseContentPage"
+               xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+               xmlns:customEntry="clr-namespace:WarehouseHandheld.Elements.CustomEntry"
+               xmlns:resources="clr-namespace:WarehouseHandheld.Resources"
+               xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.StockEnquiry"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="WarehouseHandheld.Views.StockEnquiry.StockEnquiryPage"
+               Title="Stock Enquiry">
+    <ContentPage.BindingContext>
+        <viewmodel:StockEnquiryViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <StackLayout Padding="20,20,20,10"
+                             Spacing="10">
+                    <StackLayout Margin="0,10,0,0"
+                                 Orientation="Horizontal"
+                                 VerticalOptions="Center"
+                                 HorizontalOptions="FillAndExpand">
+
+                        <customEntry:KeyboardDisabledEntry x:Name="ScanEntry"
+                                                           Placeholder="{x:Static resources:AppStrings.ScanProductCodeOrPalletSerial}"
+                                                           Text="{Binding ProductCode}"
+                                                           HorizontalOptions="FillAndExpand"
+                                                           Completed="Scan_Completed" />
+                        <Image Source="keyboard.png"
+                               HeightRequest="30"
+                               VerticalOptions="EndAndExpand">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Tapped="Keyboard_Tapped"
+                                    NumberOfTapsRequired="1" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal">
+                        <Label VerticalOptions="Center"
+                               VerticalTextAlignment="Center"
+                               Text="{x:Static resources:AppStrings.FindProduct}" />
+                        <Picker x:Name="ProductsPicker"
+                                SelectedIndexChanged="Handle_SelectedIndexChanged"
+                                Unfocused="Picker_Unfocused"
+                                ItemsSource="{Binding AllProducts}"
+                                Title="{x:Static resources:AppStrings.SelectProduct}"
+                                HorizontalOptions="FillAndExpand" />
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout>
+                    <StackLayout Orientation="Horizontal"
+                                 Margin="20,0,0,0"
+                                 Spacing="10">
+                        <Label Text="Result:"
+                               FontSize="14"
+                               TextColor="Black"
+                               FontAttributes="Bold"
+                               HorizontalOptions="StartAndExpand"
+                               LineBreakMode="NoWrap" />
+                        <Label Text="{Binding ProductName}"
+                               HorizontalOptions="StartAndExpand"
+                               FontSize="18"
+                               TextColor="Black"
+                               LineBreakMode="TailTruncation" />
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical"
+                                 HeightRequest="80"
+                                 Padding="20,10,20,20"
+                                 Spacing="15">
+
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Total Stock:"
+                                   HorizontalOptions="StartAndExpand"
+                                   VerticalOptions="FillAndExpand"
+                                   FontSize="18"
+                                   TextColor="Black" />
+                            <Label Text="{Binding StockQuantity}"
+                                   HorizontalOptions="CenterAndExpand"
+                                   VerticalOptions="FillAndExpand"
+                                   FontSize="18"
+                                   TextColor="Black" />
+                            <Label Text="Last Synced"
+                                   HorizontalOptions="EndAndExpand"
+                                   VerticalOptions="FillAndExpand"
+                                   FontSize="18"
+                                   TextColor="#cf6b08" />
+                        </StackLayout>
+
+                        <StackLayout x:Name="remainingCasesStack"
+                                     IsVisible="false"
+                                     Orientation="Horizontal">
+                            <Label Text="Remaining Cases in Pallet:"
+                                   HorizontalOptions="StartAndExpand"
+                                   VerticalOptions="FillAndExpand"
+                                   FontSize="18"
+                                   TextColor="Black" />
+                            <Label Text="{Binding CasesinPallet}"
+                                   HorizontalOptions="CenterAndExpand"
+                                   VerticalOptions="FillAndExpand"
+                                   FontSize="18"
+                                   TextColor="Black" />
+                        </StackLayout>
+
+                        <StackLayout x:Name="remainingProductsStack"
+                                     IsVisible="false"
+                                     Orientation="Horizontal">
+                            <Label Text="Remaining Products in Pallet:"
+                                   HorizontalOptions="StartAndExpand"
+                                   VerticalOptions="FillAndExpand"
+                                   FontSize="18"
+                                   TextColor="Black" />
+                            <Label Text="{Binding RemainingProductsinPallet}"
+                                   HorizontalOptions="CenterAndExpand"
+                                   VerticalOptions="FillAndExpand"
+                                   FontSize="18"
+                                   TextColor="Black" />
+                        </StackLayout>
+
+                    </StackLayout>
+                    <dg:DataGrid x:Name="grid"
+                                 VerticalOptions="FillAndExpand"
+                                 IsSortable="false"
+                                 ItemsSource="{Binding ProductDetails}">
+                        <dg:DataGrid.Columns>
+                            <dg:DataGridColumn Title="{x:Static resources:AppStrings.LocationCode}"
+                                               PropertyName="LocationCode" />
+                            <dg:DataGridColumn Title="{x:Static resources:AppStrings.LocationName}"
+                                               PropertyName="Location" />
+                            <dg:DataGridColumn Title="{x:Static resources:AppStrings.Qty}"
+                                               PropertyName="Quantity"
+                                               Width="40" />
+                        </dg:DataGrid.Columns>
+                    </dg:DataGrid>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</base:BasePage>

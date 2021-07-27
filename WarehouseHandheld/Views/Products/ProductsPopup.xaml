@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<popup:PopupBase
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="WarehouseHandheld.Views.Products.ProductsPopup"
+    xmlns:products="clr-namespace:WarehouseHandheld.Views.Products"
+    xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.Products"
+    xmlns:popup="clr-namespace:WarehouseHandheld.Views.Base.Popup"
+    Padding="15"
+    Title="Products">
+    <popup:PopupBase.BindingContext>
+        <viewmodel:ProductsViewModel />
+    </popup:PopupBase.BindingContext>
+    <ContentPage.Content>
+        <StackLayout><Entry x:Name="SearchEntry" Placeholder="Search Product" TextChanged="SearchEntry_TextChanged"/>
+        <products:ProductsListView
+            ItemSelected="Handle_ItemSelected"
+            ItemsSource="{Binding Products}" />
+            </StackLayout>
+    </ContentPage.Content>
+</popup:PopupBase>

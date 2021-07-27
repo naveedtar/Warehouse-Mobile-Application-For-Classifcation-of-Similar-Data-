@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<basePage:BasePage
+    x:Class="WarehouseHandheld.Views.GenerateLabels.ScanProductGenerateLabel"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:basePage="clr-namespace:WarehouseHandheld.Views.Base.BaseContentPage"
+    xmlns:customEntry="clr-namespace:WarehouseHandheld.Elements.CustomEntry"
+    xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.GenerateLabels"
+    Title="Generate Labels">
+
+    <ContentPage.BindingContext>
+        <viewmodel:ScanProductLabelViewModel />
+    </ContentPage.BindingContext>
+
+    <StackLayout Margin="10" Padding="20">
+        <StackLayout HorizontalOptions="FillAndExpand">
+            <Label
+                FontSize="Medium"
+                Text="Scan Product :"
+                VerticalOptions="StartAndExpand" />
+            <StackLayout
+                HorizontalOptions="FillAndExpand"
+                Orientation="Horizontal"
+                Spacing="0"
+                VerticalOptions="StartAndExpand">
+                <customEntry:KeyboardDisabledEntry
+                    x:Name="scanEntry"
+                    Completed="Handle_Completed"
+                    Focused="scanEntry_Focused"
+                    FontSize="Medium"
+                    HorizontalOptions="FillAndExpand"
+                    Placeholder="Scan Product Code"
+                    Text="{Binding ScanCode}"
+                    VerticalOptions="CenterAndExpand" />
+                <Image
+                    Margin="0,0,10,0"
+                    HeightRequest="30"
+                    Source="keyboard.png"
+                    VerticalOptions="CenterAndExpand">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Keyboard_Tapped" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </StackLayout>
+        </StackLayout>
+        <Button
+            x:Name="DuplicateButton"
+            Margin="0,20,0,0"
+            Clicked="Duplicate_Pallet_Labels"
+            HorizontalOptions="CenterAndExpand"
+            Text="Duplicate Pallet Labels" />
+        <Button
+            x:Name="PalletsCaseLabelsButton"
+            Margin="0,20,0,0"
+            Clicked="Pallets_Case_Labels_Clicked"
+            HorizontalOptions="CenterAndExpand"
+            Text="Generate Case Labels for Pallet" />
+    </StackLayout>
+
+</basePage:BasePage>

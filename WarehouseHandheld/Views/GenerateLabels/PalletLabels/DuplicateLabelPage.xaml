@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<popup:PopupBase
+    x:Class="WarehouseHandheld.Views.GenerateLabels.PalletLabels.DuplicateLabelPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customEntry="clr-namespace:WarehouseHandheld.Elements.CustomEntry"
+    xmlns:elements="clr-namespace:WarehouseHandheld.Elements.StepperElement"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:popup="clr-namespace:WarehouseHandheld.Views.Base.Popup"
+    Padding="15"
+    DisableCancelPop="false"
+    SaveButtonEnabled="true"
+    ShowSaveButton="true">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout
+                Padding="10"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+
+
+                <StackLayout
+                    HorizontalOptions="FillAndExpand"
+                    Orientation="Horizontal"
+                    VerticalOptions="Start">
+                    <Label
+                        x:Name="PalletSerial"
+                        HorizontalOptions="Start"
+                        Text="Pallet Serial: "
+                        VerticalTextAlignment="Center" />
+                    <customEntry:KeyboardDisabledEntry
+                        x:Name="PalletEntry"
+                        Completed="Handle_Clicked"
+                        Focused="scanEntry_Focused"
+                        FontSize="14"
+                        HorizontalOptions="FillAndExpand"
+                        Placeholder="Scan or Enter Pallet Serial"
+                        VerticalOptions="Center" />
+                    <Image
+                        Margin="0,0,10,0"
+                        HeightRequest="20"
+                        Source="keyboard.png"
+                        VerticalOptions="CenterAndExpand">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Keyboard_Tapped" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </StackLayout>
+
+                <Grid x:Name="mainGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="1.6*" />
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        x:Name="PalletSerialLabel"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        IsVisible="false"
+                        Text="Pallet Serial"
+                        VerticalTextAlignment="Center" />
+                    <Label
+                        x:Name="FoundPalletSerial"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        IsVisible="false"
+                        VerticalTextAlignment="Center" />
+
+                    <Label
+                        x:Name="ProductNameLabel"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        IsVisible="false"
+                        Text="Product Name"
+                        VerticalTextAlignment="Center" />
+                    <Label
+                        x:Name="FoundProductName"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        IsVisible="false"
+                        VerticalTextAlignment="Center" />
+
+                    <Label
+                        x:Name="Stepper"
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Text="No of Pallet Labels"
+                        VerticalOptions="Center" />
+                    <elements:Stepper
+                        x:Name="palletsNo"
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        HeightRequest="70"
+                        VerticalOptions="Center"
+                        ValueChanged="palletsNo_ValueChanged" Minimum="1"/>
+
+                    <Label
+                        x:Name="Cases"
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Text="No of Cases"
+                        VerticalOptions="Center" />
+                    <Entry
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        x:Name="CasesEntry"
+                        FontSize="14"
+                        HorizontalOptions="FillAndExpand"
+                        TextChanged="CasesEntry_TextChanged"
+                        VerticalOptions="Center" />
+
+                    <Label
+                        x:Name="TotalPrintableLbl"
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        VerticalOptions="Center" />
+
+                    <Label
+                        x:Name="TotalCount"
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        VerticalOptions="Center" />
+
+
+                    <Button
+                        x:Name="PrintButton"
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Clicked="PrintLabel"
+                        IsEnabled="false"
+                        Text="Print Label" />
+
+                </Grid>
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</popup:PopupBase>

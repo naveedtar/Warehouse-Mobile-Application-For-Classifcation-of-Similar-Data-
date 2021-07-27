@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<popup:PopupBase
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="WarehouseHandheld.Views.OrderItems.SkippedPalletAuthPopup"
+    xmlns:popup="clr-namespace:WarehouseHandheld.Views.Base.Popup"
+    xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.OrderItems"
+    xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+    xmlns:behaviors="clr-namespace:WarehouseHandheld.Behaviors"
+    xmlns:customEntry="clr-namespace:WarehouseHandheld.Elements.CustomEntry"
+    Padding="15"
+    ShowSaveButton="true"
+    SaveButtonText="Verify"
+    Title="Authentication">
+    <StackLayout Orientation="Vertical" VerticalOptions="Start" Padding="40" HeightRequest="100">
+        <Label Text="Enter passwrod for authorized user: " VerticalOptions="Center"/>
+        <Entry x:Name="passEntry" Keyboard="Default" IsPassword="true" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
+    </StackLayout>
+    </popup:PopupBase>

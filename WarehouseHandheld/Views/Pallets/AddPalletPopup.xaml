@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<popup:PopupBase
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="WarehouseHandheld.Views.Pallets.AddPalletPopup"
+    xmlns:popup="clr-namespace:WarehouseHandheld.Views.Base.Popup"
+    xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.Pallets"
+    xmlns:converters="clr-namespace:WarehouseHandheld.ValueConverters"
+    xmlns:behaviors="clr-namespace:WarehouseHandheld.Behaviors"
+    xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
+    xmlns:resources="clr-namespace:WarehouseHandheld.Resources"
+    xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+    Title="{x:Static resources:AppStrings.CreatePallet}"
+    ShowSaveButton="true"
+    SaveButtonText="{x:Static resources:AppStrings.CreateNew}"
+    x:Name="page">
+    <popup:PopupBase.BindingContext>
+        <viewmodel:AddPalletViewModel />
+    </popup:PopupBase.BindingContext>
+  <!-- <popup:PopupBase.ToolbarItems>
+        <ToolbarItem Icon="complete.png" Command="{Binding DispatchCommand}">
+        </ToolbarItem>
+    </popup:PopupBase.ToolbarItems>-->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBooleanConverter x:Key="Invert" />
+            <converters:DispatchConverter x:Key="Dispatch" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <StackLayout
+        >
+        <dg:DataGrid x:Name="grid" IsSortable="false" IsVisible="{Binding IsBusy, Converter = {StaticResource Invert}}" ItemsSource="{Binding Pallets}">
+                <dg:DataGrid.Columns>
+                    <dg:DataGridColumn Title="Pallet No" PropertyName="PalletNumber" />
+                    <dg:DataGridColumn Title="{x:Static resources:AppStrings.Account}" PropertyName="RecipientAccount.CompanyName" />
+                    <dg:DataGridColumn Title="{x:Static resources:AppStrings.DateComp}" PropertyName="DateCompleted"/>
+                    <dg:DataGridColumn Title="{x:Static resources:AppStrings.Action}">
+                        <dg:DataGridColumn.CellTemplate>
+                            <DataTemplate>
+                              <controls:CheckBox
+                                Checked="{Binding Checked}"
+                                VerticalOptions="CenterAndExpand"
+                                >
+                                </controls:CheckBox>
+<!--                                <Button HeightRequest="30" WidthRequest="30" Image="complete.png"  IsEnabled="{Binding IsDispatched, Converter = {StaticResource Invert}}" FontSize="8" BackgroundColor="Transparent" CommandParameter="{Binding .}" Command="{Binding BindingContext.DispatchCommand, Source={x:Reference page}}" />-->
+                            </DataTemplate>
+                        </dg:DataGridColumn.CellTemplate>
+                    </dg:DataGridColumn>
+                </dg:DataGrid.Columns>
+                <dg:DataGrid.RowsBackgroundColorPalette>
+                    <dg:PaletteCollection>
+                        <Color>#f6fbfe</Color>
+                        <Color>#fcfcfc</Color>
+                    </dg:PaletteCollection>
+                </dg:DataGrid.RowsBackgroundColorPalette>
+                <dg:DataGrid.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="ItemSelected" CommandParameter="{Binding SelectedItem, Source={x:Reference grid}}" Command="{Binding ItemSelectedCommand}" />
+                </dg:DataGrid.Behaviors>
+            </dg:DataGrid>
+        <Button Text="Dispatch Pallets" Command="{Binding DispatchCommand}" VerticalOptions="End" HorizontalOptions="CenterAndExpand"/>
+    </StackLayout>
+</popup:PopupBase>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<base:BasePage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="WarehouseHandheld.Views.Orders.OrdersPage"
+    xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.Orders"
+    xmlns:behaviors="clr-namespace:WarehouseHandheld.Behaviors"
+    xmlns:base="clr-namespace:WarehouseHandheld.Views.Base.BaseContentPage"
+    xmlns:resources="clr-namespace:WarehouseHandheld.Resources"
+    xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+    xmlns:converters="clr-namespace:WarehouseHandheld.ValueConverters"
+    Title="{x:Static resources:AppStrings.Orders}"
+    BackgroundColor="White"
+    x:Name="page">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBooleanConverter
+                x:Key="Invert" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <viewmodel:OrdersViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+       <!-- <ToolbarItem Text="{x:Static resources:AppStrings.Add}" Clicked="Add_Clicked">
+        </ToolbarItem>-->
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <ActivityIndicator
+                IsRunning="true"
+                IsVisible="{Binding IsBusy}"
+                WidthRequest="50"
+                HeightRequest="50"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Center" />
+            <StackLayout Orientation="Horizontal">
+            <SearchBar x:Name="Search" Placeholder="Search By Order / Company" IsVisible="{Binding IsBusy, Converter = {StaticResource Invert}}"  TextChanged="SearchOrder"/>
+            </StackLayout>
+            <dg:DataGrid
+                RowsBackgroundColorPalette="{x:Static resources:Constants.GridColors}"
+                IsVisible="{Binding IsBusy, Converter = {StaticResource Invert}}"
+                x:Name="grid"
+                IsSortable="false"
+                ItemsSource="{Binding Orders}"
+                >
+                <dg:DataGrid.Columns>
+                    <dg:DataGridColumn
+                        Width="50"
+                        HorizontalContentAlignment="Center"
+                        Title="Priority">
+                        <dg:DataGridColumn.CellTemplate>
+                            <DataTemplate>
+                                <BoxView CornerRadius="100" Margin="10,15,10,15" BackgroundColor="{Binding RowColor}"/>
+                            </DataTemplate>
+                        </dg:DataGridColumn.CellTemplate>
+                    </dg:DataGridColumn>
+                    <dg:DataGridColumn
+                        Title="{x:Static resources:AppStrings.OrderNo}"
+                        PropertyName="Order.OrderNumber" />
+                    <dg:DataGridColumn
+                        Title="{x:Static resources:AppStrings.Account}"
+                        PropertyName="Account.CompanyName"
+                        VerticalContentAlignment="CenterAndExpand"
+                        HorizontalContentAlignment="CenterAndExpand"
+                    />
+                    
+                    <dg:DataGridColumn
+                        Title="Actions">
+                        <dg:DataGridColumn.CellTemplate >
+                            <DataTemplate>
+                                <Button
+                                    HeightRequest="30" WidthRequest="30" Image="complete.png" 
+                                    BackgroundColor="Transparent"
+                                    CommandParameter="{Binding .}"
+                                    x:Name="Action"
+                                    Command="{Binding BindingContext.MarkAsCompleteCommand, Source={x:Reference page}}" />
+                                                                
+                            </DataTemplate>
+                        </dg:DataGridColumn.CellTemplate>
+                    </dg:DataGridColumn>
+                </dg:DataGrid.Columns>
+                <dg:DataGrid.Behaviors>
+                    <behaviors:EventToCommandBehavior
+                        EventName="ItemSelected"
+                        CommandParameter="{Binding SelectedItem, Source={x:Reference grid}}"
+                        Command="{Binding ItemSelectedCommand}" />
+                </dg:DataGrid.Behaviors>
+            </dg:DataGrid>
+        </StackLayout>
+    </ContentPage.Content>
+</base:BasePage>

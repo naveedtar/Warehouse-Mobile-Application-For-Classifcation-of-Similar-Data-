@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<base:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
+               xmlns:base="clr-namespace:WarehouseHandheld.Views.Base.BaseContentPage"
+               xmlns:resources="clr-namespace:WarehouseHandheld.Resources" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="WarehouseHandheld.Views.Orders.CreateOrderPage">
+<ContentPage.ToolbarItems>
+        <ToolbarItem Text="{x:Static resources:AppStrings.Add}" Clicked="Add_Clicked">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid
+        Padding="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width="0.4*" />
+            <ColumnDefinition
+                Width="0.6*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition
+                Height="Auto" />
+            
+        </Grid.RowDefinitions>
+            <Label Text="Account" VerticalTextAlignment="Center" VerticalOptions="Center" Grid.Row="0" Grid.Column="0"/>
+            <Button Text="Select Account" Grid.Row="0" Grid.Column="1"/>
+            <Label Text="Order Status" VerticalOptions="Center" VerticalTextAlignment="Center" Grid.Row="1" Grid.Column="0"/>
+            <Picker Grid.Row="1" Grid.Column="1"/>
+            
+            </Grid>
+	</ContentPage.Content>
+</base:BasePage>

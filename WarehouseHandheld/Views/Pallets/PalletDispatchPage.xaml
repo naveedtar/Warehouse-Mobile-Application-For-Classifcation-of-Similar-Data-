@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<base:BasePage
+    x:Class="WarehouseHandheld.Views.Pallets.PalletDispatchPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:WarehouseHandheld.Views.Base.BaseContentPage"
+    xmlns:behaviors="clr-namespace:WarehouseHandheld.Behaviors"
+    xmlns:controls="clr-namespace:SegmentedControl.FormsPlugin.Abstractions;assembly=SegmentedControl.FormsPlugin.Abstractions"
+    xmlns:converters="clr-namespace:WarehouseHandheld.ValueConverters"
+    xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+    xmlns:resources="clr-namespace:WarehouseHandheld.Resources"
+    xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.Pallets"
+    Title="Loading">
+    <ContentPage.BindingContext>
+        <viewmodel:PalletDispatchPodViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBooleanConverter x:Key="Invert" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout x:Name="segContainer" Spacing="10">
+        <ActivityIndicator
+            HorizontalOptions="CenterAndExpand"
+            IsRunning="true"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="CenterAndExpand" />
+        <StackLayout Orientation="Horizontal">
+            <SearchBar
+                x:Name="Search"
+                IsVisible="{Binding IsBusy, Converter={StaticResource Invert}}"
+                Placeholder="Search By Vehicle Registration"
+                TextChanged="SearchOrder" />
+        </StackLayout>
+        <StackLayout IsVisible="{Binding IsBusy, Converter={StaticResource Invert}}">
+            <StackLayout x:Name="SegContent">
+                <dg:DataGrid
+                    x:Name="grid"
+                    BorderColor="#CCCCCC"
+                    HeaderBackground="#00a9e7"
+                    HeaderTextColor="White"
+                    IsSortable="false"
+                    ItemsSource="{Binding BeLoaded}"
+                    VerticalOptions="FillAndExpand">
+                    <dg:DataGrid.Columns>
+                        <!--     <dg:DataGridColumn
+                            Width="70"
+                            Title="Job Id"
+                            PropertyName="MarketJobId" />-->
+                        <dg:DataGridColumn
+                            Title=" Dispatch Ref"
+                            Width="100"
+                            PropertyName="DispatchReference" />
+                        <dg:DataGridColumn
+                            Title="Created Date"
+                            PropertyName="DateCreated"
+                            StringFormat="{}{0:dd/MM/yyyy}" />
+                        <dg:DataGridColumn Title="Postcode" PropertyName="Order.ShipmentAddressPostcode" />
+                        <dg:DataGridColumn Title="Vehicle No." PropertyName="MarketVehicle.VehicleIdentifier" />
+                    </dg:DataGrid.Columns>
+                    <dg:DataGrid.RowsBackgroundColorPalette>
+                        <dg:PaletteCollection>
+                            <Color>#f6fbfe</Color>
+                            <Color>#fcfcfc</Color>
+                        </dg:PaletteCollection>
+                    </dg:DataGrid.RowsBackgroundColorPalette>
+                    <dg:DataGrid.Behaviors>
+                        <behaviors:EventToCommandBehavior
+                            Command="{Binding ItemSelectedCommand}"
+                            CommandParameter="{Binding SelectedItem, Source={x:Reference grid}}"
+                            EventName="ItemSelected" />
+                    </dg:DataGrid.Behaviors>
+                </dg:DataGrid>
+            </StackLayout>
+        </StackLayout>
+    </StackLayout>
+</base:BasePage>

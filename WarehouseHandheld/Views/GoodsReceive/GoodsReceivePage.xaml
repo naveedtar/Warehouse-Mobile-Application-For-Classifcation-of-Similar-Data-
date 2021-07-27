@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<base:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="WarehouseHandheld.Views.GoodsReceive.GoodsReceivePage"
+             xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.GoodsReceive"
+    xmlns:resources="clr-namespace:WarehouseHandheld.Resources"
+    xmlns:converters="clr-namespace:WarehouseHandheld.ValueConverters"
+    xmlns:base="clr-namespace:WarehouseHandheld.Views.Base.BaseContentPage"
+    xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+    xmlns:behaviors="clr-namespace:WarehouseHandheld.Behaviors"
+    xmlns:customEntry="clr-namespace:WarehouseHandheld.Elements.CustomEntry">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBooleanConverter
+                x:Key="Invert" />
+            <converters:NullableIntConverter
+                x:Key="Nullable" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+        <ContentPage.ToolbarItems>
+
+        <ToolbarItem
+            Text="{x:Static resources:AppStrings.Save}"
+            Command = "{Binding SaveCommand}"
+            >
+        </ToolbarItem>
+
+    </ContentPage.ToolbarItems>
+    <ContentPage.BindingContext>
+        <viewmodel:GoodsReceiveViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Spacing="0">
+            <ActivityIndicator
+                IsRunning="true"
+                IsVisible="{Binding IsBusy}"
+                WidthRequest="50"
+                HeightRequest="50"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Center" />
+            <Grid
+                IsVisible="{Binding IsBusy, Converter = {StaticResource Invert}}"
+                Padding="20,10,20,10"
+                RowSpacing="0"
+                ColumnSpacing="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition
+                        Height="*" />
+                    <RowDefinition
+                        Height="*" />
+
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="*" />
+                    <ColumnDefinition
+                        Width="1.6*" />
+                </Grid.ColumnDefinitions>
+                <Label
+                    Text="Ref. No:"
+                    TextColor="Black"
+                    VerticalOptions="Center"
+                    Grid.Row="0"
+                    Grid.Column="0" />
+                <Entry
+                    Text="{Binding Reference}"
+                    
+                    Grid.Row="0"
+                    Grid.Column="1" />
+                <Label
+                    Text="Notes"
+                    VerticalOptions="Center"
+                    TextColor="Black"
+                    Grid.Row="1"
+                    Grid.Column="0" />
+                <Entry
+                    Text="{Binding Notes}"
+                    Grid.Row="1"
+                    Grid.Column="1" />
+
+
+            </Grid>
+
+           
+                <dg:DataGrid
+                    IsVisible="{Binding IsBusy, Converter = {StaticResource Invert}}"
+                    x:Name="grid"
+                    IsSortable="false"
+                    ItemsSource="{Binding GoodsReceiveList}"
+                    >
+                    <dg:DataGrid.Columns>
+                        <dg:DataGridColumn
+                            Title="{x:Static resources:AppStrings.ProdName}"
+                            PropertyName="ProductName" />
+                        <dg:DataGridColumn Title="Counted" Width="80">
+                            <dg:DataGridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Entry Keyboard="Numeric" Placeholder="0" Text="{Binding Counted , Converter = {StaticResource Nullable}}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" />
+                                </DataTemplate>
+                            </dg:DataGridColumn.CellTemplate>
+                        </dg:DataGridColumn>
+                        <dg:DataGridColumn Title="Damaged" Width="90">
+                            <dg:DataGridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Entry Keyboard="Numeric" Placeholder="0" Text="{Binding Demaged, Converter = {StaticResource Nullable}}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" />
+                                </DataTemplate>
+                            </dg:DataGridColumn.CellTemplate>
+                        </dg:DataGridColumn>
+
+                        <dg:DataGridColumn Title="Cases" Width="90" >
+                            <dg:DataGridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Entry Keyboard="Numeric" Placeholder="0" Text="{Binding Demaged, Converter = {StaticResource Nullable}}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" />
+                                </DataTemplate>
+                            </dg:DataGridColumn.CellTemplate>
+                        </dg:DataGridColumn>
+
+                    </dg:DataGrid.Columns>
+                    <dg:DataGrid.RowsBackgroundColorPalette>
+                        <dg:PaletteCollection>
+                            <Color>#f6fbfe</Color>
+                            <Color>#fcfcfc</Color>
+                        </dg:PaletteCollection>
+                    </dg:DataGrid.RowsBackgroundColorPalette>
+
+                </dg:DataGrid>
+
+        </StackLayout>
+    </ContentPage.Content>
+</base:BasePage>

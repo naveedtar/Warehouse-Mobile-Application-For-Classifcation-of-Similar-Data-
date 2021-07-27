@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<base:BasePage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.Login"
+    xmlns:converters="clr-namespace:WarehouseHandheld.ValueConverters"
+    xmlns:resources="clr-namespace:WarehouseHandheld.Resources"
+    xmlns:base="clr-namespace:WarehouseHandheld.Views.Base.BaseContentPage"
+    x:Class="WarehouseHandheld.Views.Login.LoginPage"
+    BackgroundColor="White">
+    <ContentPage.BindingContext>
+        <viewmodel:LoginViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBooleanConverter
+                x:Key="Invert" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+        <StackLayout
+            BackgroundColor="White"
+            Padding="20,40,20,20">
+            <ActivityIndicator
+                IsRunning="true"
+                IsVisible="{Binding IsBusy}"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="CenterAndExpand" />
+            <StackLayout
+                Spacing="20"
+                IsVisible="{Binding IsBusy, Converter = {StaticResource Invert}}">
+                <Image
+                    x:Name="logo"
+                    Source="logo_wh.png"
+                    HorizontalOptions="CenterAndExpand" />
+                <Label
+                    Text="{x:Static resources:AppStrings.WarehouseHandheld}"
+                    HorizontalOptions="Center"
+                    TextColor="Gray"
+                    FontSize="16" />
+                <Entry
+                    Placeholder="{x:Static resources:AppStrings.Username}"
+                    x:Name="username"
+                    Text="{Binding Username}" />
+                <Entry
+                    Placeholder="{x:Static resources:AppStrings.Password}"
+                    x:Name="password"
+                    Text="{Binding Password}"
+                    IsPassword="true" />
+                <Button
+                    Text="{x:Static resources:AppStrings.Login}"
+                    IsEnabled="{Binding IsLoginEnabled}"
+                    Command="{Binding LoginCommand}"
+                    HeightRequest="44"
+                    BorderRadius="22"
+                BackgroundColor="Silver"/>
+
+                <Button
+                    Text="About"
+                    Command="{Binding AboutCommand}"
+                    HeightRequest="44"
+                BackgroundColor="Transparent"/>
+
+            </StackLayout>
+        </StackLayout>
+            </ScrollView>
+    </ContentPage.Content>
+</base:BasePage>

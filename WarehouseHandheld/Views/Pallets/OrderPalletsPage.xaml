@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<base:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:WarehouseHandheld.ValueConverters"  
+             xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.Pallets" 
+             xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+             xmlns:behaviors="clr-namespace:WarehouseHandheld.Behaviors" 
+               xmlns:base="clr-namespace:WarehouseHandheld.Views.Base.BaseContentPage"
+             xmlns:resources="clr-namespace:WarehouseHandheld.Resources" 
+             xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
+             x:Class="WarehouseHandheld.Views.Pallets.OrderPalletsPage"
+             Title="Pallets for Order Process"
+             x:Name="page"
+             >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+           <converters:InverseBooleanConverter x:Key="Invert" />
+<!--            <converters:DispatchConverter x:Key="Dispatch" />-->
+                <converters:OrderTypeConverter
+                x:Key="OrderType" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <viewmodel:PalletsViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="{x:Static resources:AppStrings.Add}" Command="{Binding AddPalletCommand}">
+        </ToolbarItem>
+          <ToolbarItem Text="Dispatch"  IsEnabled="{Binding IsDispatchEnable}" Command="{Binding DispatchCommand}">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <ActivityIndicator IsRunning="true" IsVisible="{Binding IsBusy}" WidthRequest="50" HeightRequest="50" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" />
+            
+            <StackLayout IsVisible="{Binding IsBusy, Converter = {StaticResource Invert}}">
+            <dg:DataGrid x:Name="grid" IsSortable="false"  ItemsSource="{Binding Pallets}">
+                <dg:DataGrid.Columns>
+                    <dg:DataGridColumn Title="Pallet No" PropertyName="PalletNumber" />
+                    <dg:DataGridColumn Title="{x:Static resources:AppStrings.Account}" PropertyName="RecipientAccount.CompanyName" />
+                    <dg:DataGridColumn Title="Date Created" PropertyName="DateCreated" StringFormat='{}{0:dd/MM/yyyy}'/>
+                    <!--<dg:DataGridColumn Title="{x:Static resources:AppStrings.Action}" Width="60">
+                        <dg:DataGridColumn.CellTemplate>
+                           <DataTemplate>
+                                      <controls:CheckBox
+                                Checked="{Binding Checked}"
+                                VerticalOptions="CenterAndExpand"
+                                >
+                                </controls:CheckBox>-->
+<!--                           <Button HeightRequest="30" WidthRequest="30" Image="complete.png"  IsEnabled="{Binding IsDispatched, Converter = {StaticResource Invert}}" FontSize="8" BackgroundColor="Transparent" CommandParameter="{Binding .}" Command="{Binding BindingContext.DispatchCommand, Source={x:Reference page}}" />-->
+                      <!--    </DataTemplate>
+                        </dg:DataGridColumn.CellTemplate>
+                    </dg:DataGridColumn>-->
+                </dg:DataGrid.Columns>
+                <dg:DataGrid.RowsBackgroundColorPalette>
+                    <dg:PaletteCollection>
+                        <Color>#f6fbfe</Color>
+                        <Color>#fcfcfc</Color>
+                    </dg:PaletteCollection>
+                </dg:DataGrid.RowsBackgroundColorPalette>
+             <dg:DataGrid.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="ItemSelected" CommandParameter="{Binding SelectedItem, Source={x:Reference grid}}" Command="{Binding ItemSelectedCommand}" />
+                </dg:DataGrid.Behaviors>
+            </dg:DataGrid>
+            </StackLayout>
+            </StackLayout>
+    </ContentPage.Content>
+</base:BasePage>

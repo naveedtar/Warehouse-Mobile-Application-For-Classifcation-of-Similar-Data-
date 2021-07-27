@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<base:BasePage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="WarehouseHandheld.Views.StockTake.StockTakePage"
+    xmlns:base="clr-namespace:WarehouseHandheld.Views.Base.BaseContentPage"
+    xmlns:behaviors="clr-namespace:WarehouseHandheld.Behaviors"
+    xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.StockTake"
+    xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+    xmlns:resources="clr-namespace:WarehouseHandheld.Resources"
+    Title="Stock Take">
+    <ContentPage.BindingContext>
+        <viewmodel:StockTakeViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <dg:DataGrid
+            x:Name="grid"
+            IsSortable="false"
+            ItemsSource="{Binding StockTakes}">
+            <dg:DataGrid.Columns>
+                <dg:DataGridColumn
+                    Width="30"
+                    HorizontalContentAlignment="Center"
+                    Title="Id"
+                    PropertyName="StockTakeId" />
+                <dg:DataGridColumn
+                    
+                    Title="Ref."
+                    PropertyName="StockTakeReference" />
+                <dg:DataGridColumn
+                    Title="Desc."
+                    PropertyName="StockTakeDescription"
+                    VerticalContentAlignment="Center" />
+                
+                <dg:DataGridColumn
+                    Title="Start Date"
+                    PropertyName="StartDate"
+                    VerticalContentAlignment="Center" />
+                <dg:DataGridColumn
+                    Title="W. Name"
+                    PropertyName="WarehouseName"
+                    VerticalContentAlignment="Center" />
+            </dg:DataGrid.Columns>
+            <dg:DataGrid.RowsBackgroundColorPalette>
+                <dg:PaletteCollection>
+                    <Color>#f6fbfe</Color>
+                    <Color>#fcfcfc</Color>
+                </dg:PaletteCollection>
+            </dg:DataGrid.RowsBackgroundColorPalette>
+            <dg:DataGrid.Behaviors>
+                    <behaviors:EventToCommandBehavior
+                        EventName="ItemSelected"
+                        CommandParameter="{Binding SelectedItem, Source={x:Reference grid}}"
+                        Command="{Binding ItemSelectedCommand}" />
+                </dg:DataGrid.Behaviors>
+        </dg:DataGrid>
+    </ContentPage.Content>
+</base:BasePage>

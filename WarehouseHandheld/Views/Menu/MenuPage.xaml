@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<base:BasePage
+    x:Class="WarehouseHandheld.Views.Menu.MenuPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:WarehouseHandheld.Views.Base.BaseContentPage"
+    xmlns:resources="clr-namespace:WarehouseHandheld.Resources"
+    xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.Menu"
+    Title="{x:Static resources:AppStrings.Menu}"
+    BackgroundColor="Silver">
+    <ContentPage.BindingContext>
+        <viewmodel:MenuViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding AboutCommand}" Text="About" />
+        <ToolbarItem Command="{Binding SettingsCommand}" Icon="settings.png" />
+        <ToolbarItem Icon="home.png" />
+        <ToolbarItem Command="{Binding SyncCommand}" Icon="refresh.png" />
+        <ToolbarItem Command="{Binding LogoutCommand}" Icon="logout.png" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid
+                Padding="10"
+                ColumnSpacing="10"
+                RowSpacing="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    x:Name="purchaseOrdersButton"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    BackgroundColor="White"
+                    Command="{Binding OrdersCommand}"
+                    CommandParameter="{Binding Source={x:Reference purchaseOrdersButton}, Path=Text}"
+                    FontSize="13"
+                    Image="purchaseOrders.png"
+                    IsVisible="false"
+                    Text="{x:Static resources:AppStrings.PurchaseOrders}" />
+                <Button
+                    x:Name="salesOrdersButton"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    BackgroundColor="White"
+                    Command="{Binding OrdersCommand}"
+                    CommandParameter="{Binding Source={x:Reference salesOrdersButton}, Path=Text}"
+                    FontSize="13"
+                    Image="salesOrders.png"
+                    IsVisible="false"
+                    Text="{x:Static resources:AppStrings.PickList}" />
+                <Button
+                    x:Name="transferOrdersButton"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    BackgroundColor="White"
+                    Command="{Binding OrdersCommand}"
+                    CommandParameter="{Binding Source={x:Reference transferOrdersButton}, Path=Text}"
+                    FontSize="13"
+                    Image="transferOrders.png"
+                    IsVisible="false"
+                    Text="{x:Static resources:AppStrings.TransferOrders}" />
+                <!--<Button
+                x:Name="workOrdersButton"
+                Text="{x:Static resources:AppStrings.WorkOrders}"
+                Grid.Row="1"
+                Grid.Column="1"
+                Image="workOrders.png"
+                BackgroundColor="White"
+                Command="{Binding OrdersCommand}"
+                CommandParameter="{Binding Source={x:Reference workOrdersButton}, Path=Text}" />-->
+                <Button
+                    x:Name="watageButton"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    BackgroundColor="White"
+                    Command="{Binding WastagesCommand}"
+                    FontSize="13"
+                    Image="wastage.png"
+                    IsVisible="false"
+                    Text="{x:Static resources:AppStrings.Wastage}" />
+                <Button
+                    x:Name="returnButton"
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    BackgroundColor="White"
+                    Command="{Binding ReturnsCommand}"
+                    FontSize="13"
+                    Image="returns.png"
+                    IsVisible="false"
+                    Text="{x:Static resources:AppStrings.Returns}" />
+                <Button
+                    x:Name="stockTakeButton"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    BackgroundColor="White"
+                    Command="{Binding StockTakeCommand}"
+                    FontSize="13"
+                    Image="stockTake.png"
+                    IsVisible="false"
+                    Text="{x:Static resources:AppStrings.StockTake}" />
+                <Button
+                    x:Name="palletingButton"
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    BackgroundColor="White"
+                    Command="{Binding PalletingCommand}"
+                    FontSize="13"
+                    Image="palleting.png"
+                    IsVisible="false"
+                    Text="{x:Static resources:AppStrings.Palleting}" />
+                <Button
+                    x:Name="stockEnquiryButton"
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    BackgroundColor="White"
+                    Command="{Binding StockEnquiryCommand}"
+                    FontSize="13"
+                    Image="palleting.png"
+                    IsVisible="false"
+                    Text="{x:Static resources:AppStrings.StockEnquiry}" />
+                <Button
+                    x:Name="generateLabelsButton"
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    BackgroundColor="White"
+                    Command="{Binding GenerateLabelCommand}"
+                    FontSize="13"
+                    Image="palleting.png"
+                    IsVisible="false"
+                    Text="Generate Labels" />
+                <Button
+                    x:Name="goodsReceive"
+                    BackgroundColor="White"
+                    Command="{Binding GoodsReceiveCommand}"
+                    FontSize="13"
+                    Image="palleting.png"
+                    IsVisible="false"
+                    Text="Goods Receive &amp; Count" />
+                <Button
+                    x:Name="printBarCode"
+                    BackgroundColor="White"
+                    Command="{Binding PrintBarCodeCommand}"
+                    FontSize="13"
+                    Image="palleting.png"
+                    IsVisible="false"
+                    Text="Print BarCode" />
+
+                <Button
+                    x:Name="loading"
+                    BackgroundColor="White"
+                    Command="{Binding LoadingCommand}"
+                    FontSize="13"
+                    Image="stockTake.png"
+                    IsVisible="false"
+                    Text="Loading" />
+
+                <Button
+                    x:Name="stockMovement"
+                    BackgroundColor="White"
+                    Command="{Binding StockMovementCommand}"
+                    FontSize="13"
+                    Image="stockTake.png"
+                    IsVisible="false"
+                    Text="Stock Move" />
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</base:BasePage>

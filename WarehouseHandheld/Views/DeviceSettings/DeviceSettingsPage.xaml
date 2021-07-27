@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<base:BasePage Title="Settings" xmlns="http://xamarin.com/schemas/2014/forms"
+          xmlns:base="clr-namespace:WarehouseHandheld.Views.Base.BaseContentPage"
+          xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.DeviceSettings" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="WarehouseHandheld.Views.DeviceSettings.DeviceSettingsPage">
+    <ContentPage.BindingContext>
+        <viewmodel:DeviceSettingsViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add Device" Clicked="AddDevice_Clicked">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView x:Name="DevicesListView" ItemsSource="{Binding DeviceList}" ItemSelected="Device_ItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="20,0,0,0" VerticalOptions="CenterAndExpand">
+                                <Label  VerticalOptions="CenterAndExpand" FontSize="16" Text="{Binding DeviceName}" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</base:BasePage>

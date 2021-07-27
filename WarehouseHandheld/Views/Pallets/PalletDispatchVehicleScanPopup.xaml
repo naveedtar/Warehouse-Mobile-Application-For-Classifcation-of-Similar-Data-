@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<popup:PopupBase
+    x:Class="WarehouseHandheld.Views.Pallets.PalletDispatchVehicleScanPopup"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customEntry="clr-namespace:WarehouseHandheld.Elements.CustomEntry"
+    xmlns:popup="clr-namespace:WarehouseHandheld.Views.Base.Popup"
+    ShowCancelButton="True"
+    ShowSaveButton="False">
+    <StackLayout Margin="4" Padding="6">
+        <Label FontSize="Medium" Text="Scan Vehicle Registration" />
+        <StackLayout
+            Orientation="Horizontal"
+            Spacing="0"
+            VerticalOptions="StartAndExpand">
+            <customEntry:KeyboardDisabledEntry
+                x:Name="scanEntry"
+                Completed="Handle_Completed"
+                HorizontalOptions="FillAndExpand"
+                Placeholder="Scan Or Enter Vehicle Registration No."
+                VerticalOptions="CenterAndExpand" />
+            <Image
+                Margin="0,0,10,0"
+                HeightRequest="25"
+                Source="keyboard.png"
+                VerticalOptions="CenterAndExpand">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Keyboard_Tapped" />
+                </Image.GestureRecognizers>
+            </Image>
+        </StackLayout>
+    </StackLayout>
+</popup:PopupBase>

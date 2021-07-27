@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<popup:PopupBase xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:popup="clr-namespace:WarehouseHandheld.Views.Base.Popup;assembly=WarehouseHandheld"
+                 xmlns:dataGridLocal="clr-namespace:Xamarin.Forms.DataGridLocal;assembly=WarehouseHandheld"
+                 xmlns:valueConverters="clr-namespace:WarehouseHandheld.ValueConverters;assembly=WarehouseHandheld"
+                 x:Class="WarehouseHandheld.Views.OrderItems.ProductLocationsPopup"
+                 Padding="15"
+                 ShowSaveButton="true"
+                 x:Name="Page"
+                 SaveButtonText="Done">
+    
+    <popup:PopupBase.Resources>
+        <ResourceDictionary>
+            <valueConverters:InverseBooleanConverter x:Key="Invert" />
+        </ResourceDictionary>
+    </popup:PopupBase.Resources>
+    <StackLayout>
+        
+        <dataGridLocal:DataGrid
+            x:Name="grid"
+            IsSortable="false"
+            Margin="10"
+            ItemsSource="{Binding ProductLocations, Source={x:Reference Page}}">
+            <dataGridLocal:DataGrid.Columns>
+                <dataGridLocal:DataGridColumn
+                    Title="Location Name"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="CenterAndExpand">
+                    <dataGridLocal:DataGridColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Text="{Binding Location.LocationName}" Margin="10,10,10,10"/>
+                        </DataTemplate>
+                    </dataGridLocal:DataGridColumn.CellTemplate>
+                </dataGridLocal:DataGridColumn>
+                <dataGridLocal:DataGridColumn
+                    Title="Location Code"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="CenterAndExpand">
+                    <dataGridLocal:DataGridColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Text="{Binding Location.LocationCode}" Margin="10,10,10,10"/>
+                        </DataTemplate>
+                    </dataGridLocal:DataGridColumn.CellTemplate>
+                </dataGridLocal:DataGridColumn>
+                <dataGridLocal:DataGridColumn
+                    Title="Quantity Available"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="CenterAndExpand">
+                    <dataGridLocal:DataGridColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Text="{Binding Quantity}" Margin="10,10,10,10"/>
+                        </DataTemplate>
+                    </dataGridLocal:DataGridColumn.CellTemplate>
+                </dataGridLocal:DataGridColumn>
+            </dataGridLocal:DataGrid.Columns>
+        </dataGridLocal:DataGrid>
+       
+    </StackLayout>
+</popup:PopupBase>

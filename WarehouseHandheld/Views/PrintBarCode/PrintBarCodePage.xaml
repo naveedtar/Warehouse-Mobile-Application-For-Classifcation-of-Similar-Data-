@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<base:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:resources="clr-namespace:WarehouseHandheld.Resources;assembly=WarehouseHandheld"
+               xmlns:base="clr-namespace:WarehouseHandheld.Views.Base.BaseContentPage"
+             xmlns:customEntry="clr-namespace:WarehouseHandheld.Elements.CustomEntry;assembly=WarehouseHandheld"
+             xmlns:printBarCode="clr-namespace:WarehouseHandheld.ViewModels.PrintBarCode;assembly=WarehouseHandheld"
+             x:Class="WarehouseHandheld.Views.PrintBarCode.PrintBarCodePage"
+             Title="Print BarCode"
+             BackgroundColor="White">
+
+    <ContentPage.BindingContext>
+        <printBarCode:PrintBarCodeViewModel />
+    </ContentPage.BindingContext>
+    <ScrollView>
+    <StackLayout Margin="2,20,2,0">
+
+        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+            <Label
+                Text="{x:Static resources:AppStrings.ScanProductCode}"
+                TextColor="Black"
+                VerticalOptions="CenterAndExpand" />
+
+            <StackLayout Spacing="0" Orientation="Horizontal"
+                         VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand">
+                <customEntry:KeyboardDisabledEntry
+                    x:Name="scanEntry"
+                    Text="{Binding ScanCode, Mode=TwoWay}"
+                    TextChanged="Handle_ScanTextChanged"
+                    Completed="Handle_Completed"
+                    WidthRequest="150"
+                    Placeholder="{x:Static resources:AppStrings.ScanEnterProductCode}"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="CenterAndExpand" />
+                <Image Margin="0,0,10,0" Source="keyboard.png" HeightRequest="20" VerticalOptions="CenterAndExpand">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Tapped="Keyboard_Tapped"
+                            NumberOfTapsRequired="1" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </StackLayout>
+        </StackLayout>
+        <Picker Title="Select BarCode Type" SelectedIndexChanged="BarCodeTypeSelected" Scale="0.8" Margin="20,5,20,0">
+            <Picker.Items>
+                <x:String>SKU Code</x:String>
+                <x:String>BarCode</x:String>
+                <x:String>BarCode 2</x:String>
+            </Picker.Items>
+        </Picker>
+        <StackLayout HorizontalOptions="CenterAndExpand" Margin="0,20,0,0">
+          
+
+            <Label x:Name="Barcode" Text="{Binding BarCode}"  Margin="0,10,0,0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                   TextColor="Black" FontSize="Medium" />
+            <Label Text="{Binding ProductName}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                   TextColor="Black" FontSize="Medium" />
+        </StackLayout>
+        <Label Text="Number Of Prints" TextColor="Black" Margin="20,5,20,0" FontSize="Small"/>
+        <Entry Keyboard="Numeric" Placeholder="Number Of Prints Required" WidthRequest="50"
+               Text="{Binding PrintsNumber}" Margin="30,0,30,0" />
+        <Button Text="Print" Clicked="Print" Margin="30,5,30,0" />
+    </StackLayout>
+        </ScrollView>
+</base:BasePage>

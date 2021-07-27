@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "917069153309",
+    "firebase_url": "https://warehouse-handheld.firebaseio.com",
+    "project_id": "warehouse-handheld",
+    "storage_bucket": "warehouse-handheld.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:917069153309:android:4427f9f3853154f42ef2f4",
+        "android_client_info": {
+          "package_name": "com.ganedata.Warehouse_Handheld"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "917069153309-bk4dal5ue6drhk5v43il6oeclcu2nqjo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAAK6nWsV7FhRKnh3LAKB_xxtmxCA-AEs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "917069153309-bk4dal5ue6drhk5v43il6oeclcu2nqjo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

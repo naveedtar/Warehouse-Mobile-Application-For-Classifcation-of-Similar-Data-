@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<popup:PopupBase
+    x:Class="WarehouseHandheld.Views.Sync.SyncAlertPopupPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:popup="clr-namespace:WarehouseHandheld.Views.Base.Popup"
+    ShowCancelButton="false"
+    ShowSaveButton="false">
+
+    <StackLayout HorizontalOptions="CenterAndExpand">
+        <Grid Padding="30" RowSpacing="50">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                FontAttributes="Bold"
+                FontSize="Large"
+                HorizontalOptions="CenterAndExpand"
+                HorizontalTextAlignment="Center"
+                Text="Sync Alert" />
+            <Label
+                x:Name="SyncAlertText"
+                Grid.Row="1"
+                Grid.Column="0"
+                FontSize="Medium"
+                HorizontalOptions="CenterAndExpand"
+                HorizontalTextAlignment="Center"
+                VerticalOptions="Center" />
+            <ActivityIndicator
+                x:Name="SyncInProgress"
+                Grid.Row="2"
+                Grid.Column="0"
+                HorizontalOptions="Center"
+                IsRunning="true"
+                IsVisible="false"
+                VerticalOptions="CenterAndExpand" />
+            <Button
+                x:Name="CtBtn"
+                Grid.Row="2"
+                Grid.Column="0"
+                Clicked="Done_Clicked"
+                HorizontalOptions="Center"
+                IsVisible="false"
+                Text="Continue"
+                VerticalOptions="Center" />
+        </Grid>
+        <Button
+            x:Name="CloseBtn"
+            Margin="10,0,10,20"
+            Padding="20"
+            Clicked="Close_Clicked"
+            HorizontalOptions="Center"
+            IsVisible="true"
+            Text="Dismiss"
+            VerticalOptions="EndAndExpand" />
+    </StackLayout>
+</popup:PopupBase>

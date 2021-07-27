@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<popup:PopupBase xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:popup="clr-namespace:WarehouseHandheld.Views.Base.Popup"
+             xmlns:page="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
+             xmlns:converters="clr-namespace:WarehouseHandheld.ValueConverters"
+             xmlns:viewModel="clr-namespace:WarehouseHandheld.ViewModels.Pallets"
+             xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid" 
+             x:Class="WarehouseHandheld.Views.Pallets.PalletDetailsPopup"
+             ShowCancelButton="true"
+                 >
+        <page:PopupPage.BindingContext>
+        <viewModel:PalletDispatchDetailPodViewModel />
+        </page:PopupPage.BindingContext>
+    
+        <StackLayout Margin="10,10,10,10">
+        
+          <dg:DataGrid x:Name="grid" ItemsSource="{Binding PalletProductDetailObj}" BorderColor="#CCCCCC" HeaderBackground="#00a9e7" HeaderTextColor="White" VerticalOptions="FillAndExpand">
+                    <dg:DataGrid.Columns>
+                        <dg:DataGridColumn Title="Product Name." PropertyName="Product.Name" />
+                        <dg:DataGridColumn Title="Product Quantity" PropertyName="PalletProduct.PalletQuantity"/>
+                    </dg:DataGrid.Columns>
+                    <dg:DataGrid.RowsBackgroundColorPalette>
+                        <dg:PaletteCollection>
+                            <Color>#f6fbfe</Color>
+                            <Color>#fcfcfc</Color>
+                        </dg:PaletteCollection>
+                    </dg:DataGrid.RowsBackgroundColorPalette>
+                   
+                </dg:DataGrid>
+        </StackLayout>
+</popup:PopupBase>

@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<popup:PopupBase
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="WarehouseHandheld.Views.DeviceSettings.AddDevice.AddDevicePopup"
+    xmlns:popup="clr-namespace:WarehouseHandheld.Views.Base.Popup"
+    xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.DeviceSettings.AddDevice"
+    Padding="15"
+    Title="Add Device"
+    ShowSaveButton="true"
+    SaveButtonText="Save"
+    SaveCommand="{Binding SaveCommand}">
+   <ContentPage.BindingContext>
+        <viewmodel:AddDeviceViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <ScrollView>
+
+        
+        <Grid Padding="20,0,20,0" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    Width="*" />
+                <ColumnDefinition
+                    Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="50" />
+                <RowDefinition
+                    Height="50" />
+                <RowDefinition
+                    Height="50" />
+                <RowDefinition
+                    Height="50" />
+                <RowDefinition
+                    Height="50" />
+                <RowDefinition
+                    Height="50" />
+                <RowDefinition
+                    Height="50" />
+                <RowDefinition
+                    Height="50" />
+                <RowDefinition
+                    Height="50" />
+                <RowDefinition
+                    Height="50" />
+                <RowDefinition
+                    Height="50" />
+                <RowDefinition
+                    Height="50" />
+            </Grid.RowDefinitions>
+            <Label
+                Text="Device Name"
+                Grid.Row="0"
+                Grid.Column="0" 
+            VerticalOptions="Center"/>
+            <Entry
+                Text="{Binding DeviceName}"
+                Grid.Row="0"
+                Grid.Column="1"
+                FontSize="14"
+                VerticalOptions="Center"
+            />
+            <Label
+                Text="Device Type"
+                Grid.Row="1"
+                Grid.Column="0" 
+            VerticalOptions="Center"/>
+            <Picker
+                Grid.Row="1"
+                Grid.Column="1"
+                ItemsSource="{Binding DeviceTypeList}"
+                SelectedItem="{Binding DeviceType}"
+                VerticalOptions="Center"
+            />
+
+            <Label
+                Text="Font"
+                Grid.Row="2"
+                Grid.Column="0" 
+            VerticalOptions="Center"/>
+            <Picker
+                Grid.Row="2"
+                Grid.Column="1"
+                ItemsSource="{Binding FontList}"
+                SelectedItem="{Binding Font}"
+                VerticalOptions="Center"
+            />
+            <Label
+                Text="Text Height"
+                Grid.Row="3"
+                Grid.Column="0" 
+            VerticalOptions="Center"/>
+            <Picker
+                SelectedItem="{Binding TextHeight}"
+                ItemsSource="{Binding SizeList}"
+                Grid.Row="3"
+                Grid.Column="1"
+                VerticalOptions="Center"
+            />
+            <Label
+                Text="Text Width"
+                Grid.Row="4"
+                Grid.Column="0" 
+            VerticalOptions="Center"/>
+            <Picker
+                SelectedItem="{Binding TextWidth}"
+                ItemsSource="{Binding SizeList}"
+                Grid.Row="4"
+                Grid.Column="1"
+                VerticalOptions="Center"
+            />
+            <Label
+                Text="Header Height"
+                Grid.Row="5"
+                Grid.Column="0" 
+            VerticalOptions="Center"/>
+            <Picker
+                SelectedItem="{Binding HeaderHeight}"
+                ItemsSource="{Binding SizeList}"
+                Grid.Row="5"
+                Grid.Column="1"
+                VerticalOptions="Center"
+            />
+
+            <Label
+                Text="Header Width"
+                Grid.Row="6"
+                Grid.Column="0" 
+            VerticalOptions="Center"/>
+            <Picker
+                SelectedItem="{Binding HeaderWidth}"
+                ItemsSource="{Binding SizeList}"
+                Grid.Row="6"
+                Grid.Column="1"
+                VerticalOptions="Center"
+            />
+
+            <Label
+                Text="Media Type"
+                Grid.Row="7"
+                Grid.Column="0" 
+                VerticalOptions="Center"/>
+            <Picker
+                SelectedItem="{Binding MediaType}"
+                ItemsSource="{Binding MediaTypeList}"
+                Grid.Row="7"
+                Grid.Column="1"
+                VerticalOptions="Center"
+                SelectedIndexChanged="Picker_SelectedIndexChanged"
+            />
+             <Label
+                Text="Paper Width (mm)"
+                Grid.Row="8"
+                Grid.Column="0"
+                VerticalOptions="Center">
+             
+                 <!--<Label.Triggers>
+                     <DataTrigger Binding="{Binding IsVisiblePaperConfigurations}" TargetType="Label" Value="false">
+                         <Setter Property="IsVisible" Value="false"></Setter>
+                     </DataTrigger>
+                 </Label.Triggers>-->
+                
+             </Label>
+
+            <Entry
+                Text="{Binding PaperWidth}"
+                Grid.Row="8"
+                Grid.Column="1"
+                FontSize="14"
+                Keyboard="Numeric"
+                VerticalOptions="Center">
+            </Entry>
+
+            <Label
+                Text="Paper Height (mm)"
+                Grid.Row="9"
+                Grid.Column="0"
+                VerticalOptions="Center" IsVisible="false">
+                 <Label.Triggers>
+                     <DataTrigger Binding="{Binding IsVisiblePaperConfigurations}" TargetType="Label" Value="true">
+                         <Setter Property="IsVisible" Value="true"></Setter>
+                     </DataTrigger>
+                 </Label.Triggers>
+            </Label>
+
+            <Entry
+                    Text="{Binding PaperHeight}"
+                    Grid.Row="9"
+                    Grid.Column="1"
+                    FontSize="14"
+                    Keyboard="Numeric"
+                    VerticalOptions="Center" IsVisible="false">
+                 <Entry.Triggers>
+                     <DataTrigger Binding="{Binding IsVisiblePaperConfigurations}" TargetType="Entry" Value="true">
+                         <Setter Property="IsVisible" Value="true"></Setter>
+                     </DataTrigger>
+                 </Entry.Triggers>
+            </Entry>
+            
+
+             <Label
+                Text="Paper Gap (mm)"
+                Grid.Row="10"
+                Grid.Column="0"
+                VerticalOptions="Center" IsVisible="false">
+                  <Label.Triggers>
+                         <DataTrigger Binding="{Binding IsVisiblePaperConfigurations}" TargetType="Label" Value="true">
+                             <Setter Property="IsVisible" Value="true"></Setter>
+                         </DataTrigger>
+                  </Label.Triggers>
+             </Label>
+
+            <Entry
+                 Text="{Binding PaperGap}"
+                Grid.Row="10"
+                Grid.Column="1"
+                FontSize="14"
+                 Keyboard="Numeric"
+                VerticalOptions="Center" IsVisible="false">
+
+                <Entry.Triggers>
+                     <DataTrigger Binding="{Binding IsVisiblePaperConfigurations}" TargetType="Entry" Value="true">
+                         <Setter Property="IsVisible" Value="true"></Setter>
+                     </DataTrigger>
+                 </Entry.Triggers>
+            </Entry>
+            
+           <!-- <Label
+                Text="Additional Notes"
+                Grid.Row="8"
+                Grid.Column="0"
+            VerticalOptions="Center"/>
+            <Editor
+                Text="{Binding Notes}"
+                Grid.Row="8"
+                Grid.Column="1"
+                FontSize="14"
+                VerticalOptions="Center"
+            />-->
+        </Grid>
+    </ScrollView>
+    </ContentPage.Content>
+</popup:PopupBase>

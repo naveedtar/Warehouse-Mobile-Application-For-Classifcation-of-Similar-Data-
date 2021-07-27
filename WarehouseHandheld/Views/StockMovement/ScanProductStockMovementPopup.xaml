@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<pages1:PopupBase
+    x:Class="WarehouseHandheld.Views.StockMovement.ScanProductStockMovementPopup"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:WarehouseHandheld.ValueConverters"
+    xmlns:customEntry="clr-namespace:WarehouseHandheld.Elements.CustomEntry"
+    xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+    xmlns:elements="clr-namespace:WarehouseHandheld.Elements.StepperElement"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:pages1="clr-namespace:WarehouseHandheld.Views.Base.Popup"
+    xmlns:resources="clr-namespace:WarehouseHandheld.Resources"
+    xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.StockMovement"
+    x:Name="page"
+    Title="Scan Products For Stock Movement"
+    Padding="15"
+    DisableCancelPop="true"
+    ShowSaveButton="true">
+
+    <pages:PopupPage.BindingContext>
+        <viewmodel:ScanStockMovementViewModel />
+    </pages:PopupPage.BindingContext>
+
+    <StackLayout
+        Padding="10"
+        HorizontalOptions="FillAndExpand"
+        Spacing="20"
+        VerticalOptions="FillAndExpand">
+        <StackLayout Padding="10" Orientation="Horizontal">
+            <Label Text="Item Code" />
+            <Label Text="{Binding Product.SKUCode}" />
+        </StackLayout>
+
+        <Grid x:Name="NonSerialProductStack" IsVisible="False">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="1.6*" />
+            </Grid.ColumnDefinitions>
+            <Label
+                x:Name="AddCasesLabel"
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="Add Cases"
+                VerticalOptions="Center" />
+            <Switch
+                x:Name="CasesSwitch"
+                Grid.Row="0"
+                Grid.Column="1"
+                Toggled="Handle_Toggled"
+                VerticalOptions="Center" />
+            <Label
+                x:Name="QuantityLabel"
+                Grid.Row="1"
+                Grid.Column="0"
+                Text="{x:Static resources:AppStrings.Quantity}"
+                VerticalOptions="Center" />
+            <elements:Stepper
+                x:Name="QuantityStepper"
+                Grid.Row="1"
+                Grid.Column="1"
+                Maximum="{Binding MaxQuantity}"
+                Value="{Binding Quantity, Mode=TwoWay}" />
+            <Label
+                x:Name="CasesLabel"
+                Grid.Row="2"
+                Grid.Column="0"
+                IsVisible="false"
+                Text="Cases"
+                VerticalOptions="Center" />
+            <elements:Stepper
+                x:Name="CasesStepper"
+                Grid.Row="2"
+                Grid.Column="1"
+                IsVisible="false"
+                Maximum="{Binding MaxCases}"
+                Value="{Binding Cases, Mode=TwoWay}" />
+            <Label
+                x:Name="PerCaseLabel"
+                Grid.Row="3"
+                Grid.Column="0"
+                IsVisible="false"
+                Text="Products/Case" />
+            <Label
+                x:Name="PerCaseText"
+                Grid.Row="3"
+                Grid.Column="1"
+                IsVisible="false"
+                Text="{Binding Product.ProductsPerCase}" />
+            <Label
+                x:Name="CasesProgress"
+                Grid.Row="4"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                IsVisible="false"
+                Text="{Binding CasesProgress}"
+                TextColor="Gray" />
+        </Grid>
+
+
+        <StackLayout
+            x:Name="SerialProductStack"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand">
+            <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                <customEntry:KeyboardDisabledEntry
+                    x:Name="serialScanEntry"
+                    Completed="Handle_Completed"
+                    HorizontalOptions="CenterAndExpand"
+                    Placeholder="Scan/Enter Serial Number"
+                    Text="{Binding ScanProductSerial}"
+                    TextChanged="Handle_ScanTextChanged" />
+                <Image
+                    Margin="0,0,10,0"
+                    HeightRequest="30"
+                    Source="keyboard.png"
+                    VerticalOptions="CenterAndExpand">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Keyboard_Tapped" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </StackLayout>
+            <dg:DataGrid
+                IsSortable="false"
+                ItemsSource="{Binding SerialsAdded}"
+                VerticalOptions="FillAndExpand">
+                <dg:DataGrid.Columns>
+                    <dg:DataGridColumn Title="{x:Static resources:AppStrings.SerialNo}" PropertyName="SerialNo" />
+                    <dg:DataGridColumn
+                        Title="Actions"
+                        Width="75"
+                        HorizontalContentAlignment="Center">
+                        <dg:DataGridColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button
+                                    BackgroundColor="Transparent"
+                                    Command="{Binding BindingContext.RemoveSerialCommand, Source={x:Reference page}}"
+                                    CommandParameter="{Binding .}"
+                                    HeightRequest="30"
+                                    Image="remove.png"
+                                    WidthRequest="30" />
+                            </DataTemplate>
+                        </dg:DataGridColumn.CellTemplate>
+                    </dg:DataGridColumn>
+                </dg:DataGrid.Columns>
+            </dg:DataGrid>
+        </StackLayout>
+
+    </StackLayout>
+</pages1:PopupBase>

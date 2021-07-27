@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<base:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
+xmlns:base="clr-namespace:WarehouseHandheld.Views.Base.BaseContentPage"
+xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="WarehouseHandheld.Views.About.AboutPage" Title="About"
+               >
+    <ContentPage.Content>
+            <Grid
+                Padding="20"
+                RowSpacing="10"
+                ColumnSpacing="10">
+                <Grid.RowDefinitions>
+                <RowDefinition
+                        Height="Auto" />
+                <RowDefinition
+                        Height="Auto" />
+                <RowDefinition
+                        Height="Auto" /> 
+                    <RowDefinition
+                        Height="Auto" />
+                <RowDefinition
+                        Height="Auto" />
+                 <RowDefinition
+                        Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="*" />
+                    <ColumnDefinition
+                        Width="1.6*" />
+                </Grid.ColumnDefinitions>
+            <Label Text="Identifier" Grid.Row="0" Grid.Column="0" TextColor="Black" FontAttributes="Bold" FontSize="18"/>
+            <Label x:Name="identifierLabel" Text="" Grid.Row="0" Grid.Column="1" FontSize="16"/>
+            <Label Text="App Version" Grid.Row="1" Grid.Column="0" TextColor="Black" FontAttributes="Bold" FontSize="18"/>
+            <Label x:Name="versionNumberLabel" Text="" Grid.Row="1" Grid.Column="1" FontSize="16"/>
+            <Label Text="Code Version" Grid.Row="2" Grid.Column="0" TextColor="Black" FontAttributes="Bold" FontSize="18"/>
+            <Label x:Name="versionNameLabel" Text="" Grid.Row="2" Grid.Column="1" FontSize="16"/>
+            <Label Text="Domain" Grid.Row="3" Grid.Column="0" TextColor="Black" FontAttributes="Bold" FontSize="18"/>
+            <Label x:Name="domainLabel" Text="" Grid.Row="3" Grid.Column="1" FontSize="16"/>
+            <Button Text="Sync" Clicked="Handle_Clicked" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="FillAndExpand"/>
+            <Button x:Name="ExportDbBtn" Text="Export Database" IsVisible="false" Clicked="ExportDb" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="FillAndExpand"/>
+            
+        </Grid>
+    </ContentPage.Content>
+</base:BasePage>

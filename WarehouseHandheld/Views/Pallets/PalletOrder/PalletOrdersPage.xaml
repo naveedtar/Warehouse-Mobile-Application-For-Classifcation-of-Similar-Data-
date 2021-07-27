@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<base:BasePage xmlns:converters="clr-namespace:WarehouseHandheld.ValueConverters" 
+             xmlns:base="clr-namespace:WarehouseHandheld.Views.Base.BaseContentPage"
+             xmlns="http://xamarin.com/schemas/2014/forms" xmlns:resources="clr-namespace:WarehouseHandheld.Resources" xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.Pallets.PalletOrder" x:Class="WarehouseHandheld.Views.Pallets.PalletOrder.PalletOrdersPage" x:Name="page">
+<ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBooleanConverter
+                x:Key="Invert" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <viewmodel:PalletOrdersViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+    <StackLayout Spacing="0">
+            <ActivityIndicator
+                IsRunning="true"
+                IsVisible="{Binding IsBusy}"
+                WidthRequest="50"
+                HeightRequest="50"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Center" />
+            <Label Margin="10,0,0,0" IsVisible="{Binding IsBusy, Converter = {StaticResource Invert}}" x:Name="AccountLabel"/>
+        <dg:DataGrid x:Name="grid" IsSortable="false" IsVisible="{Binding IsBusy, Converter = {StaticResource Invert}}" ItemsSource="{Binding Orders}">
+            <dg:DataGrid.Columns>
+               
+                <dg:DataGridColumn Title="{x:Static resources:AppStrings.Product}" PropertyName="Product.Name" />
+                <dg:DataGridColumn Title="{x:Static resources:AppStrings.OrderId}" PropertyName="OrderDetails.OrderID" />
+                <dg:DataGridColumn Title="{x:Static resources:AppStrings.Qty}" PropertyName="Quantity" Width="40"/>
+                <dg:DataGridColumn Title="{x:Static resources:AppStrings.QtyProcessed}" PropertyName="QuantityProcessed" Width="70" />
+                <dg:DataGridColumn
+                        Title="{x:Static resources:AppStrings.Actions}" Width="60">
+                        <dg:DataGridColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button
+                                    Text="{x:Static resources:AppStrings.AddQty}"
+                                    FontSize="8"
+                                    BackgroundColor="Transparent"
+                                    CommandParameter="{Binding .}"
+                                    IsEnabled="{Binding BindingContext.IsEnableAddQty, Source={x:Reference page}}"
+                                    Command="{Binding BindingContext.AddQtyCommand, Source={x:Reference page}}" />
+                            </DataTemplate>
+                        </dg:DataGridColumn.CellTemplate>
+                    </dg:DataGridColumn>
+            </dg:DataGrid.Columns>
+            <dg:DataGrid.RowsBackgroundColorPalette>
+                <dg:PaletteCollection>
+                    <Color>#f6fbfe</Color>
+                    <Color>#fcfcfc</Color>
+                </dg:PaletteCollection>
+            </dg:DataGrid.RowsBackgroundColorPalette>
+        </dg:DataGrid>
+            <Label Margin="10,10,0,0" IsVisible="{Binding IsBusy, Converter = {StaticResource Invert}}" Text="{x:Static resources:AppStrings.PalletDetails}"/>
+            <dg:DataGrid x:Name="ProductsGrid" IsVisible="{Binding IsBusy, Converter = {StaticResource Invert}}" ItemsSource="{Binding PalletProducts}">
+            <dg:DataGrid.Columns>
+                <dg:DataGridColumn Title="{x:Static resources:AppStrings.Product}" PropertyName="ProductName" />
+                <dg:DataGridColumn Title="{x:Static resources:AppStrings.Quantity}" PropertyName="PalletProduct.PalletQuantity" Width="70" />
+                    <dg:DataGridColumn Title="{x:Static resources:AppStrings.Added}" PropertyName="CreatedDate" Width="70" />
+            </dg:DataGrid.Columns>
+            <dg:DataGrid.RowsBackgroundColorPalette>
+                <dg:PaletteCollection>
+                    <Color>#f6fbfe</Color>
+                    <Color>#fcfcfc</Color>
+                </dg:PaletteCollection>
+            </dg:DataGrid.RowsBackgroundColorPalette>
+        </dg:DataGrid>
+            </StackLayout>
+    </ContentPage.Content>
+</base:BasePage>

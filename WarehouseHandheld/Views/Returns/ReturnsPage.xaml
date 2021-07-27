@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<base:BasePage xmlns="http://xamarin.com/schemas/2014/forms"  
+             xmlns:base="clr-namespace:WarehouseHandheld.Views.Base.BaseContentPage"
+             xmlns:customEntry="clr-namespace:WarehouseHandheld.Elements.CustomEntry" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="WarehouseHandheld.Views.Returns.ReturnsPage" xmlns:converters="clr-namespace:WarehouseHandheld.ValueConverters" xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.Returns" xmlns:resources="clr-namespace:WarehouseHandheld.Resources" xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid" Title="Returns">
+    <ContentPage.BindingContext>
+        <viewmodel:ReturnsViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBooleanConverter x:Key="Invert" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+        <StackLayout>
+            <ActivityIndicator IsRunning="true" IsVisible="{Binding IsBusy}" WidthRequest="50" HeightRequest="50" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" />
+            <Grid IsVisible="{Binding IsBusy, Converter = {StaticResource Invert}}" Padding="20,20,20,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="7*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Row="0" Grid.ColumnSpan="2" x:Name="SearchLabel" Text="Search Orders" FontAttributes="Bold" FontSize="20" />
+                <Label Grid.Row="1" Grid.Column="0" FontSize="16" x:Name="OrderLabel" VerticalOptions="Center" Text="Order No." />
+                <Entry x:Name="scanEntry" Grid.Row="1" Grid.Column="1" FontSize="16" VerticalOptions="Center" Placeholder="Enter Order No." Completed="Handle_Completed" />
+                <StackLayout Spacing="0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
+                <customEntry:KeyboardDisabledEntry x:Name="productScanEntry" Focused="scanEntry_Focused"  Completed="ProductSearch_Completed" Placeholder="Scan / Enter Product Code"  FontSize="14" VerticalOptions="Center" HorizontalOptions="FillAndExpand" />
+                <Image Margin="0,0,10,0" Source="keyboard.png" HeightRequest="30" VerticalOptions="CenterAndExpand">
+                <Image.GestureRecognizers>
+                <TapGestureRecognizer
+                  Tapped="Keyboard_Tapped"
+                  NumberOfTapsRequired="1" />
+                </Image.GestureRecognizers>
+                </Image>
+                </StackLayout>
+                
+                <Label Grid.Row="3" Grid.Column="0" Margin="0,5,0,0" Grid.ColumnSpan="2" FontSize="16" x:Name="SellableLabel"  Text="Are goods in sellable condition?" />
+                <Switch Grid.Row="3" Grid.Column="1" Margin="0,5,0,0" x:Name="SellableCheckBox" VerticalOptions="Center" IsToggled="{Binding IsSellableGoods}"/>
+                <Label Grid.Row="4" Grid.Column="0" Margin="0,5,0,0" Grid.ColumnSpan="2" FontSize="16" x:Name="MissingTrackingLabel"  Text="Missing Tracking No." />
+                <Switch Grid.Row="4" Grid.Column="1" Margin="0,5,0,0" x:Name="MissingTrackingCheckbox" VerticalOptions="Center" IsToggled="{Binding IsMissingTrackingNo}"/>
+                <Label Grid.Row="5" Grid.Column="0" FontSize="16" VerticalOptions="Center" Text="Product Name" />
+                <Picker Grid.Row="5" Grid.Column="1" SelectedIndex="{Binding ProductIndex}" ItemsSource="{Binding Products}" />
+                <Button Grid.Row="6" Grid.ColumnSpan="2" HorizontalOptions="EndAndExpand" IsEnabled="{Binding IsReturnEnable}" Text="Return Selected Product" Command="{Binding ReturnCommand}" />
+            </Grid>
+            <dg:DataGrid x:Name="grid" IsSortable="false" HeightRequest="200" ItemsSource="{Binding ProductsReturn}">
+                    <dg:DataGrid.Columns>
+                        <dg:DataGridColumn Title="{x:Static resources:AppStrings.OrderId}" PropertyName="OrderId" />
+                        <dg:DataGridColumn Title="{x:Static resources:AppStrings.ProductId}" PropertyName="ProductId" />
+                        <dg:DataGridColumn Title="{x:Static resources:AppStrings.Quantity}" PropertyName="Quantity" />
+                    </dg:DataGrid.Columns>
+                    <dg:DataGrid.RowsBackgroundColorPalette>
+                        <dg:PaletteCollection>
+                            <Color>#f6fbfe</Color>
+                            <Color>#fcfcfc</Color>
+                        </dg:PaletteCollection>
+                    </dg:DataGrid.RowsBackgroundColorPalette>
+                </dg:DataGrid>
+        </StackLayout>
+            </ScrollView>
+    </ContentPage.Content>
+</base:BasePage>

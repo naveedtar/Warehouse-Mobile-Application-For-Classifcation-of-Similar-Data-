@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<popup:PopupBase xmlns="http://xamarin.com/schemas/2014/forms" 
+                 xmlns:popup="clr-namespace:WarehouseHandheld.Views.Base.Popup"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="WarehouseHandheld.Views.Sync.SyncAlertPopup"
+                 ShowCancelButton="false"
+                 ShowSaveButton="false"
+                 >
+    <StackLayout>
+    <Grid Padding="30" RowSpacing="50">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+        <Label Text="Sync Alert" FontAttributes="Bold" Grid.Column="0" Grid.Row="0" FontSize="Large" HorizontalOptions="CenterAndExpand" />
+        <Label x:Name="SyncAlertText" Grid.Column="0" FontSize="Medium" Grid.Row="1" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center"  VerticalOptions="Center"/>
+       <ActivityIndicator
+            x:Name="SyncInProgress"
+            IsRunning="true"
+            IsVisible="false"
+            Grid.Row="2"
+            Grid.Column="0"
+            VerticalOptions="CenterAndExpand"
+            HorizontalOptions="CenterAndExpand" />
+        <Button x:Name="CtBtn" IsVisible="false"  Grid.Column="0" Grid.Row="2" Text="Continue" Clicked="Done_Clicked" VerticalOptions="Center" HorizontalOptions="Center"/>
+    </Grid>
+    <Button x:Name="CloseBtn" IsVisible="true" Padding="20" Margin="10,0,10,20"  Text="Dismiss" Clicked="Close_Clicked" VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand"/>
+</StackLayout>
+  
+</popup:PopupBase>

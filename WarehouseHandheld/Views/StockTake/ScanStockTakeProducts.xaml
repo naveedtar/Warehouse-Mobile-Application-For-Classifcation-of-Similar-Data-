@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<base:BasePage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:converters="clr-namespace:WarehouseHandheld.ValueConverters"
+    xmlns:resources="clr-namespace:WarehouseHandheld.Resources"
+    xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.StockTake"
+    xmlns:base="clr-namespace:WarehouseHandheld.Views.Base.BaseContentPage"
+    xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+    xmlns:customEntry="clr-namespace:WarehouseHandheld.Elements.CustomEntry"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="WarehouseHandheld.Views.StockTake.ScanStockTakeProducts"
+    x:Name="page">
+    <ContentPage.BindingContext>
+        <viewmodel:ScanStockProductViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBooleanConverter
+                x:Key="Invert" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout
+            Padding="0,20,0,20"
+            Spacing="20">
+            <StackLayout
+                Padding="20,0,20,0">
+                <StackLayout
+                    Orientation="Horizontal">
+                    <Label
+                        VerticalOptions="Center"
+                        VerticalTextAlignment="Center"
+                        Text="Product Location:" />
+                    <Entry
+                        x:Name="productLocation"
+                        Text="{Binding LocationCode}"
+                        Placeholder="Enter Location"
+                        FontSize="14"
+                        HorizontalOptions="FillAndExpand"
+                        Completed="productLocation_Completed"
+                        VerticalOptions="Center" />
+                    
+                </StackLayout>
+                <StackLayout
+                    Orientation="Horizontal"
+                    VerticalOptions="CenterAndExpand">
+                    <customEntry:KeyboardDisabledEntry
+                        x:Name="ScanEntry"
+                        Placeholder="{x:Static resources:AppStrings.ScanProductCode}"
+                        Text="{Binding ProductCode}"
+                        Completed="Scan_Completed"
+                        IsEnabled="False"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="CenterAndExpand" />
+                    <Image
+                        Margin="0,0,10,0"
+                        Source="keyboard.png"
+                         HeightRequest="30"
+                        VerticalOptions="CenterAndExpand">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Tapped="Keyboard_Tapped"
+                                NumberOfTapsRequired="1" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </StackLayout>
+                
+                <StackLayout
+                    Orientation="Horizontal"
+                    VerticalOptions="CenterAndExpand">
+                    <customEntry:KeyboardDisabledEntry
+                        x:Name="ScanSerialEntry"
+                        IsVisible="{Binding IsSerialEntryShowing}"
+                        Placeholder="{x:Static resources:AppStrings.ScanProductSerials}"
+                        Text="{Binding SerialCode}"
+                        Completed="ScanSerial_Completed"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="CenterAndExpand" />
+                    <Image
+                        IsVisible="{Binding IsSerialEntryShowing}"
+                        Margin="0,0,10,0"
+                        Source="keyboard.png"
+                        HeightRequest="30"
+                        VerticalOptions="CenterAndExpand">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Tapped="Keyboard_Tapped_Serial"
+                                NumberOfTapsRequired="1" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </StackLayout>
+                <Button
+                    IsVisible="{Binding IsSerialEntryShowing}"
+                    Text="Go to Next Product"
+                    HorizontalOptions="EndAndExpand"
+                    Clicked="Next_Clicked" />
+                <StackLayout
+                    Orientation="Horizontal">
+                    <Label
+                        VerticalOptions="Center"
+                        VerticalTextAlignment="Center"
+                        Text="{x:Static resources:AppStrings.FindProduct}" />
+                    <Label
+                        VerticalTextAlignment="Center"
+                        VerticalOptions="Center"
+                        Text="{Binding SelectedProduct.Name}">
+                    </Label>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer
+                            NumberOfTapsRequired="1"
+                            Command="{Binding SelectProductCommand}" />
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </StackLayout>
+            <dg:DataGrid
+                x:Name="grid"
+                IsSortable="false"
+                ItemsSource="{Binding StockProducts}">
+                <dg:DataGrid.Columns>
+                    <dg:DataGridColumn
+                        Title="{x:Static resources:AppStrings.SKUCode}"
+                        PropertyName="Product.SKUCode" />
+                    <dg:DataGridColumn
+                        Title="{x:Static resources:AppStrings.ProdName}"
+                        PropertyName="Product.Name" />
+                    <dg:DataGridColumn
+                        Title="{x:Static resources:AppStrings.Serials}"
+                        PropertyName="Serial" />
+                    <dg:DataGridColumn
+                        Title="{x:Static resources:AppStrings.Qty}"
+                        PropertyName="Quantity"
+                        Width="40" />
+                    <dg:DataGridColumn
+                        Title="{x:Static resources:AppStrings.Cases}"
+                        PropertyName="Cases"
+                        Width="60" />
+                    <dg:DataGridColumn
+                        Title="{x:Static resources:AppStrings.Action}"
+                        Width="60">
+                        <dg:DataGridColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button
+                                    Text="{x:Static resources:AppStrings.Edit}"
+                                    BackgroundColor="Transparent"
+                                    IsEnabled="{Binding BindingContext.IsActionButtonEnable, Source={x:Reference page}}"
+                                    IsVisible="{Binding BindingContext.ShouldShowEdit, Source={x:Reference page}}"
+                                    CommandParameter="{Binding .}"
+                                    Command="{Binding BindingContext.EditCommand, Source={x:Reference page}}" 
+                                  />
+                            </DataTemplate>
+                        </dg:DataGridColumn.CellTemplate>
+                    </dg:DataGridColumn>
+                </dg:DataGrid.Columns>
+                <dg:DataGrid.RowsBackgroundColorPalette>
+                    <dg:PaletteCollection>
+                        <Color>#f6fbfe</Color>
+                        <Color>#fcfcfc</Color>
+                    </dg:PaletteCollection>
+                </dg:DataGrid.RowsBackgroundColorPalette>
+            </dg:DataGrid>
+        </StackLayout>
+    </ContentPage.Content>
+</base:BasePage>

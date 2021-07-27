@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="WarehouseHandheld.Views.Accounts.AccountsListView"
+    x:Name="self">
+    <ContentView.Content>
+        <ListView
+            ItemsSource="{Binding ItemsSource, Source={x:Reference self}}"
+            ItemSelected="Handle_ItemSelected">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout
+                            Padding="20,0,20,0"
+                            Orientation="Horizontal">
+                            <Label
+                                Text="{Binding CompanyName}"
+                                LineBreakMode="TailTruncation"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Start" />
+                            <Label
+                                Text="{Binding AccountID}"
+                                VerticalOptions="Center"
+                                HorizontalOptions="EndAndExpand" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ContentView.Content>
+</ContentView>

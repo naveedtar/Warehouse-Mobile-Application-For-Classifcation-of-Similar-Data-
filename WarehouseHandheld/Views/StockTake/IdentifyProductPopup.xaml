@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<popup:PopupBase xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.StockTake" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:customEntry="clr-namespace:WarehouseHandheld.Elements.CustomEntry" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" x:Class="WarehouseHandheld.Views.StockTake.IdentifyProductPopup" xmlns:elements="clr-namespace:WarehouseHandheld.Elements.StepperElement" xmlns:resources="clr-namespace:WarehouseHandheld.Resources" xmlns:popup="clr-namespace:WarehouseHandheld.Views.Base.Popup" ShowSaveButton="true" DisableCancelPop="true"
+    Padding="15" Title="">
+
+    <StackLayout Padding="10">
+        <StackLayout Orientation="Horizontal">
+            <Label VerticalOptions="Center" HorizontalOptions="Start" Text="Select Option"/>
+        <Picker x:Name="OptionPicker" HorizontalOptions="FillAndExpand" SelectedIndexChanged="Handle_SelectedIndexChanged"
+                >
+            <Picker.Items>
+                <x:String>Product SKU</x:String>
+                <x:String>Barcode</x:String>
+                <x:String>Outer Barcode</x:String>
+                <x:String>Serial Code</x:String>
+                <x:String>Pallet Serial</x:String>
+            </Picker.Items>
+          </Picker>
+    </StackLayout>
+    <Grid x:Name="ProductGrid" IsVisible="false" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="1.6*" />
+            </Grid.ColumnDefinitions>
+        
+        <Label Text="Name:" VerticalOptions="Center" Grid.Column="0" Grid.Row="0"/>
+        <Entry Text="{Binding Name}" Grid.Row="0" VerticalOptions="Center" Grid.Column="1"/>
+        <Label x:Name="SKULabel" Text="SKU:" VerticalOptions="Center" Grid.Column="0" Grid.Row="1"/>
+        <Entry x:Name="SKUEntry" Text="{Binding SKU}" VerticalOptions="Center" Grid.Row="1" Grid.Column="1"/>
+        <Label x:Name="BarcodeLabel" VerticalOptions="Center" Text="Barcode:" Grid.Column="0" Grid.Row="2"/>
+        <Entry x:Name="BarcodeEntry" Text="{Binding Barcode}" VerticalOptions="Center" Grid.Row="2" Grid.Column="1"/>
+        <Label x:Name="Barcode2Label" VerticalOptions="Center" Text="Barcode2:" Grid.Column="0" Grid.Row="3"/>
+        <Entry x:Name="Barcode2Entry" Text="{Binding Barcode2}" VerticalOptions="Center" Grid.Row="3" Grid.Column="1"/>
+            <Label VerticalOptions="Center" Text="Quantity:" Grid.Column="0" Grid.Row="4"/>
+        <Entry Text="{Binding Quantity}" VerticalOptions="Center" Keyboard="Numeric" Grid.Row="4" Grid.Column="1"/>
+        </Grid>
+        <Grid x:Name="ProductSerialGrid" IsVisible="false" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="1.6*" />
+            </Grid.ColumnDefinitions>
+        
+        <Label VerticalOptions="Center" Text="Select Prod:"  Grid.Column="0" Grid.Row="0"/>
+        <Label VerticalOptions="Center" Text="{Binding Product.Name}" Grid.Row="0" Grid.Column="1">
+                <Label.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SelectProduct}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            
+            </Grid>
+        <Grid x:Name="PalletSerialGrid" IsVisible="false" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="1.6*" />
+            </Grid.ColumnDefinitions>
+        
+        <Label VerticalOptions="Center" Text="Select Prod:"  Grid.Column="0" Grid.Row="0"/>
+        <Label VerticalOptions="Center" Text="{Binding Product.Name}" Grid.Row="0" Grid.Column="1">
+                <Label.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SelectProduct}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            <Label VerticalOptions="Center" Text="Quantity:"  Grid.Column="0" Grid.Row="1" x:Name="qauntityLabel"/>
+        <Entry Text="{Binding Quantity}" VerticalOptions="Center"  Keyboard="Numeric" Grid.Row="1" Grid.Column="1"/>
+            </Grid>
+        </StackLayout>
+</popup:PopupBase>

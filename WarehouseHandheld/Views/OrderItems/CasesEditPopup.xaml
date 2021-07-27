@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<popup:PopupBase
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="WarehouseHandheld.Views.OrderItems.CasesEditPopup"
+    xmlns:popup="clr-namespace:WarehouseHandheld.Views.Base.Popup"
+    xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.OrderItems"
+    xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+    xmlns:behaviors="clr-namespace:WarehouseHandheld.Behaviors"
+    xmlns:customEntry="clr-namespace:WarehouseHandheld.Elements.CustomEntry"
+    Padding="15"
+    ShowSaveButton="true"
+    SaveButtonText="Done"
+    Title="Edit Cases"> 
+    <StackLayout Orientation="Vertical">
+    <StackLayout Orientation="Horizontal" VerticalOptions="Start" Padding="40" HeightRequest="100">
+        <Label x:Name="CasesEntryLabel"  VerticalOptions="Center"/>
+        <Entry x:Name="casesEntry" Keyboard="Numeric" VerticalOptions="Center" HorizontalOptions="StartAndExpand" WidthRequest="100"/>
+    </StackLayout>
+        <StackLayout x:Name="returnStack" Orientation="Horizontal" VerticalOptions="Start" Padding="40" IsVisible="false" HeightRequest="100" >
+            <Label x:Name="Totalcases"/>
+            <Label x:Name="CasesInput"/>
+        </StackLayout>
+        </StackLayout>
+    </popup:PopupBase>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<popup:PopupBase
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    x:Class="WarehouseHandheld.Views.ProductQuantity.ProductQuantityPopup"
+    xmlns:elements="clr-namespace:WarehouseHandheld.Elements.StepperElement"
+    xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.ProductQuantity"
+    xmlns:resources="clr-namespace:WarehouseHandheld.Resources"
+    xmlns:popup="clr-namespace:WarehouseHandheld.Views.Base.Popup"
+    ShowSaveButton="true"
+    DisableCancelPop="true"
+    Padding="15"
+    Title="{x:Static resources:AppStrings.ScanNonSerialItems}"
+    >
+    <pages:PopupPage.BindingContext>
+        <viewmodel:ProductQuantityViewModel />
+    </pages:PopupPage.BindingContext>
+    <StackLayout
+        Padding="10"
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="40" />
+                <RowDefinition
+                    Height="40" />
+                <RowDefinition
+                    Height="40" />
+                <RowDefinition
+                    Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    Width="*" />
+                <ColumnDefinition
+                    Width="1.6*" />
+            </Grid.ColumnDefinitions>
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="{x:Static resources:AppStrings.ScanLocation}"
+                VerticalOptions="Center" />
+            <Entry
+                Grid.Row="0"
+                Grid.Column="1"
+                Placeholder="{x:Static resources:AppStrings.ScanEnterLocationCode}"
+                Text="{Binding ProductCode}"
+                TextChanged="Handle_ScanTextChanged"
+                FontSize="14"
+                VerticalOptions="Center" />
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                Text="{x:Static resources:AppStrings.ScanProductCode}"
+                VerticalOptions="Center" />
+            <Entry
+                Grid.Row="1"
+                Grid.Column="1"
+                Placeholder="{x:Static resources:AppStrings.ScanEnterProductCode}"
+                FontSize="14"
+                VerticalOptions="Center" />
+            <Label
+                Grid.Row="2"
+                Grid.Column="0"
+                Text="{x:Static resources:AppStrings.Quantity}"
+                VerticalOptions="Center" />
+            <elements:Stepper
+                Grid.Row="2"
+                Grid.Column="1" />
+        </Grid>
+    </StackLayout>
+</popup:PopupBase>

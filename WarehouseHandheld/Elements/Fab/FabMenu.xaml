@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="WarehouseHandheld.Elements.Fab.FabMenu"
+    xmlns:menuList="clr-namespace:WarehouseHandheld.Elements.MenuList"
+    xmlns:buttonRound="clr-namespace:WarehouseHandheld.Elements.ButtonRound"
+    xmlns:drawingControls="clr-namespace:WarehouseHandheld.Elements.DrawingControls">
+    <ContentView.Content>
+        <AbsoluteLayout
+            VerticalOptions="FillAndExpand">
+            <AbsoluteLayout
+                AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                AbsoluteLayout.LayoutFlags="All"
+                VerticalOptions="FillAndExpand"
+                BackgroundColor="#efefef">
+                <AbsoluteLayout.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding ToggleViewMenuCommand}" />
+                </AbsoluteLayout.GestureRecognizers>
+            </AbsoluteLayout>
+            <StackLayout
+                Spacing="14"
+                AbsoluteLayout.LayoutFlags="All"
+                AbsoluteLayout.LayoutBounds="1,1,1,1"
+                VerticalOptions="End"
+                HorizontalOptions="End"
+                TranslationX="-16"
+                TranslationY="-84">
+                <menuList:MenuListControl
+                    x:Name="menuList"
+                    ItemSpace="14"
+                    ItemsSource="{Binding ItemsSource}"
+                    IsOpened="{Binding IsViewMenuShown}">
+                    <menuList:MenuListControl.ItemTemplate>
+                        <DataTemplate>
+                            <AbsoluteLayout
+                                VerticalOptions="End"
+                                HorizontalOptions="End">
+                                <buttonRound:ButtonRound
+                                    AbsoluteLayout.LayoutFlags="All"
+                                    AbsoluteLayout.LayoutBounds="0,0,1,1"
+                                    Text="{Binding Name}"
+                                    LeftInnerPadding="20"
+                                    RightInnerPadding="60"
+                                    BackgroundColor="#A6000000"
+                                    TextColor="White"
+                                    Opacity="0.6"
+                                    HeightRequest="40"
+                                    CornerRadius="20"
+                                    Source="{Binding .}"
+                                    Clicked="OnViewClicked" />
+                                <AbsoluteLayout
+                                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                                    AbsoluteLayout.LayoutBounds="1,0,40,40"
+                                    InputTransparent="True">
+                                    <drawingControls:CircleShape
+                                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                                        AbsoluteLayout.LayoutBounds="0,0,40,40"
+                                        InputTransparent="True"
+                                        CircleRadius="19"
+                                        ShapeColor="#591700">
+                                        <drawingControls:CircleShape.Triggers>
+                                            <DataTrigger
+                                                TargetType="drawingControls:CircleShape"
+                                                Binding="{Binding IsSelected}"
+                                                Value="True">
+                                                <Setter
+                                                    Property="ShapeColor"
+                                                    Value="#A0C3E0" />
+                                            </DataTrigger>
+                                        </drawingControls:CircleShape.Triggers>
+                                    </drawingControls:CircleShape>
+                                    <Image
+                                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                                        AbsoluteLayout.LayoutBounds="0,0,40,40"
+                                        VerticalOptions="Center"
+                                        WidthRequest="20"
+                                        HeightRequest="20"
+                                        HorizontalOptions="Center"
+                                        Source="fab_plus.png"
+                                        InputTransparent="True" />
+                                </AbsoluteLayout>
+                            </AbsoluteLayout>
+                        </DataTemplate>
+                    </menuList:MenuListControl.ItemTemplate>
+                </menuList:MenuListControl>
+            </StackLayout>
+        </AbsoluteLayout>
+    </ContentView.Content>
+</ContentView>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<popup:PopupBase xmlns="http://xamarin.com/schemas/2014/forms" 
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+                 xmlns:viewmodel="clr-namespace:WarehouseHandheld.ViewModels.StockTake"
+                 x:Class="WarehouseHandheld.Views.StockTake.StockTakePopup"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:popup="clr-namespace:WarehouseHandheld.Views.Base.Popup"
+                 ShowSaveButton="true"
+                 SaveButtonEnabled="true"
+                 Padding="15"
+                 >
+       <pages:PopupPage.BindingContext>
+        <viewmodel:StockTakePopupViewModel />
+       </pages:PopupPage.BindingContext>
+   <StackLayout Padding="10" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <Grid x:Name="mainGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+               
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="1.6*" />
+            </Grid.ColumnDefinitions>
+            
+            <Label x:Name="BatchNumberLabel" Grid.Row="0" Grid.Column="0" Text="Batch Number" VerticalTextAlignment="Center" IsVisible="false" />
+            <Entry x:Name="BatchNumber" Grid.Row="0" Grid.Column="1" Text="{Binding BatchNumber}" IsVisible="false"/>
+            <Label x:Name="ExpiryDateLabel" Grid.Row="1" Grid.Column="0" Text="Expiry Date" VerticalTextAlignment="Center" IsVisible="false" />
+            <DatePicker x:Name="ExpiryDatePicker" Date="{Binding ExpiryDate}" Grid.Row="1" Grid.Column="1" IsVisible="false"/>
+           
+        </Grid>
+        <!--        <dg:DataGrid
+            ItemsSource="{Binding Products}"
+            VerticalOptions="FillAndExpand">
+            <dg:DataGrid.Columns>
+                <dg:DataGridColumn
+                    Title="{x:Static resources:AppStrings.ProductId}"
+                    PropertyName="ProductId" />
+                <dg:DataGridColumn
+                    Title="{x:Static resources:AppStrings.ProductCode}"
+                    PropertyName="SKUCode" />
+                <dg:DataGridColumn
+                    Title="{x:Static resources:AppStrings.ProductName}"
+                    PropertyName="Name" />
+            </dg:DataGrid.Columns>
+        </dg:DataGrid>-->
+    </StackLayout>
+</popup:PopupBase>
